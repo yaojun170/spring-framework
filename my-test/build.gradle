@@ -1,0 +1,19 @@
+plugins {
+    id 'java'
+}
+
+group 'cn.yj'
+version '1.0.SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile(project(":spring-context"))
+    implementation 'junit:junit:4.12'
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.slf4j:slf4j-log4j12:1.7.25'
+
+}

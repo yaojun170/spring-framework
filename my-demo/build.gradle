@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'cn.yj'
+version '1.0.SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(project(":spring-context"))
+//    implementation 'junit:junit:4.12'
+    implementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
+    runtimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.2'
+}
+
+//test {
+//    useJUnitPlatform()
+//}

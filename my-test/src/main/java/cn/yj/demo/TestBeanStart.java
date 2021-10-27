@@ -3,18 +3,20 @@ package cn.yj.demo;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.ClassPathResource;
 
 /**
  * @Description
  * @Author yaojun
  * @Date 2021-10-27
  */
-public class TestDemo {
-	Logger logger = LoggerFactory.getLogger(TestDemo.class);
+public class TestBeanStart {
+	Logger logger = LoggerFactory.getLogger(TestBeanStart.class);
 
 	@Test
-	public void test1(){
+	public void testXmlContext(){
 		logger.info("-sss--");
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("demo/bean-demo.xml");
 		Animal animal = (Animal) context.getBean("animal");
@@ -22,4 +24,14 @@ public class TestDemo {
 		logger.info(animal.toString());
 		logger.info(demoService.sayDemo());
 	}
+
+	@Test
+	public void testXmlBeanFactory(){
+		logger.info("====");
+		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("demo/bean-demo.xml"));
+		Animal animal = xmlBeanFactory.getBean(Animal.class);
+		logger.info(animal.toString());
+	}
+
+
 }

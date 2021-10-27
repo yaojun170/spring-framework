@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  * @Date 2021-10-26
  */
 public class DemoServiceImpl implements DemoService {
-	Logger logger = LoggerFactory.getLogger(TestDemo.class);
+	Logger logger = LoggerFactory.getLogger(TestBeanStart.class);
 	@Override
 	public String sayDemo() {
 		logger.info("-----sayDemo----");

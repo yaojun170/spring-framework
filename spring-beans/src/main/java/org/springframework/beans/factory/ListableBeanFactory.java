@@ -55,6 +55,7 @@ import org.springframework.lang.Nullable;
  * @see HierarchicalBeanFactory
  * @see BeanFactoryUtils
  */
+//各类查询bean
 public interface ListableBeanFactory extends BeanFactory {
 
 	/**

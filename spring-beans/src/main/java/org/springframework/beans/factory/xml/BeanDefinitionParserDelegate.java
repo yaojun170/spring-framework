@@ -435,6 +435,7 @@ public class BeanDefinitionParserDelegate {
 			checkNameUniqueness(beanName, aliases, ele);
 		}
 
+		//进一步解析bean所有属性，并统一封装至GenericBeanDefinition对象中
 		AbstractBeanDefinition beanDefinition = parseBeanDefinitionElement(ele, beanName, containingBean);
 		if (beanDefinition != null) {
 			if (!StringUtils.hasText(beanName)) {
@@ -495,6 +496,7 @@ public class BeanDefinitionParserDelegate {
 
 	/**
 	 * Parse the bean definition itself, without regard to name or aliases. May return
+	 * 进一步解析bean所有属性，并统一封装至GenericBeanDefinition对象中
 	 * {@code null} if problems occurred during the parsing of the bean definition.
 	 */
 	@Nullable
@@ -515,14 +517,19 @@ public class BeanDefinitionParserDelegate {
 		try {
 			AbstractBeanDefinition bd = createBeanDefinition(className, parent);
 
+			//最终解析<bean>标签
 			parseBeanDefinitionAttributes(ele, beanName, containingBean, bd);
 			bd.setDescription(DomUtils.getChildElementValueByTagName(ele, DESCRIPTION_ELEMENT));
 
+			//解析bean子标签<meta>
 			parseMetaElements(ele, bd);
+			//解析bean子标签<lookup-method>
 			parseLookupOverrideSubElements(ele, bd.getMethodOverrides());
 			parseReplacedMethodSubElements(ele, bd.getMethodOverrides());
 
+			//解析构造器注入标签:<constructor- arg>
 			parseConstructorArgElements(ele, bd);
+			//解析<property>标签
 			parsePropertyElements(ele, bd);
 			parseQualifierElements(ele, bd);
 
@@ -554,6 +561,7 @@ public class BeanDefinitionParserDelegate {
 	 * @param containingBean containing bean definition
 	 * @return a bean definition initialized according to the bean element attributes
 	 */
+	//解析bean的各种属性
 	public AbstractBeanDefinition parseBeanDefinitionAttributes(Element ele, String beanName,
 			@Nullable BeanDefinition containingBean, AbstractBeanDefinition bd) {
 
@@ -637,6 +645,7 @@ public class BeanDefinitionParserDelegate {
 	 * @return the newly created bean definition
 	 * @throws ClassNotFoundException if bean class resolution was attempted but failed
 	 */
+	//实例化返回：GenericBeanDefinition
 	protected AbstractBeanDefinition createBeanDefinition(@Nullable String className, @Nullable String parentName)
 			throws ClassNotFoundException {
 
@@ -646,6 +655,10 @@ public class BeanDefinitionParserDelegate {
 
 	/**
 	 * Parse the meta elements underneath the given element, if any.
+	 * 参考下面的配置：
+	 * <bean id="demoService"  class="xxx.DemoServiceImpl" >
+	 * 		<meta key="a" value="1223"/>
+	 * 	</bean>
 	 */
 	public void parseMetaElements(Element ele, BeanMetadataAttributeAccessor attributeAccessor) {
 		NodeList nl = ele.getChildNodes();
@@ -1384,6 +1397,7 @@ public class BeanDefinitionParserDelegate {
 		if (namespaceUri == null) {
 			return null;
 		}
+		//从spring.handlers文件中获取对应的NameSpaceHandler
 		NamespaceHandler handler = this.readerContext.getNamespaceHandlerResolver().resolve(namespaceUri);
 		if (handler == null) {
 			error("Unable to locate Spring NamespaceHandler for XML schema namespace [" + namespaceUri + "]", ele);
@@ -1493,7 +1507,7 @@ public class BeanDefinitionParserDelegate {
 	 */
 	@Nullable
 	public String getNamespaceURI(Node node) {
-		return node.getNamespaceURI();
+		return node.getNamespaceURI();//<beans xmlns=xx这个就是>
 	}
 
 	/**

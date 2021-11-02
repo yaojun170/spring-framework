@@ -3,6 +3,7 @@ package cn.yj.demo;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.io.ClassPathResource;
@@ -29,6 +30,9 @@ public class TestBeanStart {
 	public void testXmlBeanFactory(){
 		logger.info("====");
 		XmlBeanFactory xmlBeanFactory = new XmlBeanFactory(new ClassPathResource("demo/bean-demo.xml"));
+		BeanDefinition animalBeanD = xmlBeanFactory.getBeanDefinition("animal");
+		System.out.println(animalBeanD);
+		Object animal1 = xmlBeanFactory.getBean("animal");
 		Animal animal = xmlBeanFactory.getBean(Animal.class);
 		logger.info(animal.toString());
 	}

@@ -11,16 +11,11 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
-	<bean id="animal" class="cn.yj.demo.Animal">
-		<property name="name" value="dog" />
-		<property name="legs" value="4" />
-		<property name="address" value="japan" >
-		</property>
+	<bean id="beanId2" class="cn.yj.ioc.autowire.Company" autowire="byType">
 	</bean>
 
-	<bean id="demoService"  class="cn.yj.demo.DemoServiceImpl"   primary="true">
-		<meta key="a" value="1223"/>
+	<bean id="furniture" class="cn.yj.ioc.factorybean.FurnitureFactoryBean" >
+		<constructor-arg name="type" value="desk" />
 	</bean>
 
-	<!-- bean所有属性定义可以参考有道云文档：springIOC/BeanDefinition -->
 </beans>

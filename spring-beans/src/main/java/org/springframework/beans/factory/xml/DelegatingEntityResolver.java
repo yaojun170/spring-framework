@@ -45,9 +45,9 @@ public class DelegatingEntityResolver implements EntityResolver {
 	public static final String XSD_SUFFIX = ".xsd";
 
 
-	private final EntityResolver dtdResolver;
+	private final EntityResolver dtdResolver;//加载dtd类型xml
 
-	private final EntityResolver schemaResolver;
+	private final EntityResolver schemaResolver;//加载xsd类型xml
 
 
 	/**

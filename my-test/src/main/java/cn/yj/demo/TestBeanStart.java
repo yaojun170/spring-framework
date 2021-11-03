@@ -33,8 +33,8 @@ public class TestBeanStart {
 		BeanDefinition animalBeanD = xmlBeanFactory.getBeanDefinition("animal");
 		System.out.println(animalBeanD);
 		Object animal1 = xmlBeanFactory.getBean("animal");
-		Animal animal = xmlBeanFactory.getBean(Animal.class);
-		logger.info(animal.toString());
+//		Animal animal = xmlBeanFactory.getBean(Animal.class);
+//		logger.info(animal.toString());
 	}
 
 

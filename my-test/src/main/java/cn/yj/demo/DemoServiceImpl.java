@@ -3,6 +3,7 @@ package cn.yj.demo;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @Description
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DemoServiceImpl implements DemoService {
 	Logger logger = LoggerFactory.getLogger(TestBeanStart.class);
+
 	@Override
 	public String sayDemo() {
 		logger.info("-----sayDemo----");

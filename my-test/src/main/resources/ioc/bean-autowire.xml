@@ -11,7 +11,9 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
-	<bean id="beanId2" class="cn.yj.ioc.autowire.Company" autowire="byType">
+	<bean id="beanId2" class="cn.yj.ioc.autowire.Company" autowire="byName">
+<!--		<property name="employee" ref="emp"/>-->
+		<property name="name" value="beijing sogou.inc" />
 	</bean>
 	<bean id="emp" class="cn.yj.ioc.autowire.Employee">
 		<property name="name" value="jackma"/>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class Company {
 	private Employee employee;
+	private String name;
 
 	public Employee getEmployee() {
 		return employee;
@@ -18,10 +19,19 @@ public class Company {
 		this.employee = employee;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
 		return "Company{" +
-				"emp=" + employee +
+				"employee=" + employee +
+				", name='" + name + '\'' +
 				'}';
 	}
 }

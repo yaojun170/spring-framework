@@ -34,7 +34,7 @@ public class TestBeanStart {
 		System.out.println(animalBeanD);
 		Object animal1 = xmlBeanFactory.getBean("animal");
 //		Animal animal = xmlBeanFactory.getBean(Animal.class);
-//		logger.info(animal.toString());
+		logger.info(animal1.toString());
 	}
 
 

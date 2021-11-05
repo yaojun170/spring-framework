@@ -34,6 +34,7 @@ import org.springframework.lang.Nullable;
  * @see BeanWrapper
  * @see org.springframework.validation.DataBinder
  */
+//这个接口可以注册和保存属性编辑器,默认实现：PropertyEditorRegistrySupport
 public interface PropertyEditorRegistry {
 
 	/**

@@ -315,7 +315,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 			//因为上一部分处理的是默认标签
 			bdHolder = delegate.decorateBeanDefinitionIfRequired(ele, bdHolder);
 			try {
-				// 注册BeanDefinition到BeanDefinitionRegistry,前面beanDefinition都已经解析完了
+				// **注册BeanDefinition到BeanDefinitionRegistry,前面beanDefinition都已经解析完了
 				// Register the final decorated instance.
 				BeanDefinitionReaderUtils.registerBeanDefinition(bdHolder, getReaderContext().getRegistry());
 			}

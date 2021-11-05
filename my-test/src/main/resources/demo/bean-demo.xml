@@ -18,9 +18,10 @@
 		</property>
 	</bean>
 
-	<bean id="demoService"  class="cn.yj.demo.DemoServiceImpl"   primary="true">
-		<meta key="a" value="1223"/>
+	<bean id="demoService"  class="cn.yj.demo.DemoServiceImpl" >
 	</bean>
+
+	<bean id="myBeanFactoryPostProcessor" class="cn.yj.extension.beanfactorypostprocessor.MyBeanFactoryPostProcessor" />
 
 	<!-- bean所有属性定义可以参考有道云文档：springIOC/BeanDefinition -->
 </beans>

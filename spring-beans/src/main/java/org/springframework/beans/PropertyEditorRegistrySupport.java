@@ -99,13 +99,13 @@ public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 	private boolean configValueEditorsActive = false;
 
 	@Nullable
-	private Map<Class<?>, PropertyEditor> defaultEditors;
+	private Map<Class<?>, PropertyEditor> defaultEditors;//默认editors
 
 	@Nullable
 	private Map<Class<?>, PropertyEditor> overriddenDefaultEditors;
 
 	@Nullable
-	private Map<Class<?>, PropertyEditor> customEditors;
+	private Map<Class<?>, PropertyEditor> customEditors;//自定义editros
 
 	@Nullable
 	private Map<String, CustomEditorHolder> customEditorsForPath;
@@ -197,6 +197,7 @@ public class PropertyEditorRegistrySupport implements PropertyEditorRegistry {
 	/**
 	 * Actually register the default editors for this registry instance.
 	 */
+	// 创建默认
 	private void createDefaultEditors() {
 		this.defaultEditors = new HashMap<>(64);
 

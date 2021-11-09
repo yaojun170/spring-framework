@@ -699,6 +699,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 		clearByTypeCache();
 	}
 
+	//冻结所有bean定义，不被再次修改
 	@Override
 	public void freezeConfiguration() {
 		this.configurationFrozen = true;

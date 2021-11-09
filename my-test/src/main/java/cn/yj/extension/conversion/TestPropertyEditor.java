@@ -1,4 +1,4 @@
-package cn.yj.extension;
+package cn.yj.extension.conversion;
 
 import org.junit.Test;
 import org.springframework.beans.propertyeditors.CustomDateEditor;

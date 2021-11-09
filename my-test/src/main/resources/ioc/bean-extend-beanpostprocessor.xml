@@ -11,15 +11,8 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
-	<bean id="animal" class="cn.yj.demo.Animal">
-		<property name="name" value="dog" />
-		<property name="legs" value="4" />
-		<property name="address" value="japan" >
-		</property>
-	</bean>
+	<import resource="../demo/bean-demo.xml" />
 
-	<bean id="demoService"  class="cn.yj.demo.DemoServiceImpl" >
-	</bean>
+	<bean id="myBeanPostProcessor" class="cn.yj.extension.beanpostprocessor.MyBeanPostProcessor" />
 
-	<!-- bean所有属性定义可以参考有道云文档：springIOC/BeanDefinition -->
 </beans>

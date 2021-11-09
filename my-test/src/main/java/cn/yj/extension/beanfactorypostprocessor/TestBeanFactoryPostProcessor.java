@@ -15,9 +15,25 @@ public class TestBeanFactoryPostProcessor {
 	@Test
 	public void testBeanFactoryPostProcessor(){
 		System.out.println("==start==");
-		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("demo/bean-demo.xml");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean-extend-beanfactorypostprocessor.xml");
 		Animal animal = (Animal) context.getBean("animal");
 		System.out.println(animal);
+	}
+
+	@Test
+	public void testBeanDefinitionRegsitryPostProcessor(){
+		System.out.println("==start==");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean-extend-beanfactorypostprocessor.xml");
+		MyHouse myHouse = context.getBean("myHouse", MyHouse.class);
+		System.out.println(myHouse);
+	}
+
+	@Test
+	public void testBeanPlaceHolder(){
+		System.out.println("==start==");
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("ioc/bean-extend-propertyplaceholder.xml");
+		MyHouse myHouse = context.getBean("myHouse2", MyHouse.class);
+		System.out.println(myHouse);
 	}
 
 }

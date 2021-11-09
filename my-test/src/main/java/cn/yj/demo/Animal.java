@@ -10,6 +10,7 @@ public class Animal {
 	private String name;
 	private int legs;
 	private String address;
+	private int age;
 
 	public String getName() {
 		return name;
@@ -35,12 +36,21 @@ public class Animal {
 		this.address = address;
 	}
 
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	@Override
 	public String toString() {
 		return "Animal{" +
 				"name='" + name + '\'' +
 				", legs=" + legs +
 				", address='" + address + '\'' +
+				", age=" + age +
 				'}';
 	}
 }

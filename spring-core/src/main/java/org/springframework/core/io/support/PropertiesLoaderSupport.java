@@ -160,6 +160,7 @@ public abstract class PropertiesLoaderSupport {
 
 		if (!this.localOverride) {
 			// Load properties from file afterwards, to let those properties override.
+			//从location读取.properties
 			loadProperties(result);
 		}
 

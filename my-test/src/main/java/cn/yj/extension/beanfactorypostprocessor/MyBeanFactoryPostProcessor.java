@@ -23,5 +23,7 @@ public class MyBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 			System.out.println(propertyValue.getName()+":"+propertyValue.getValue());
 		}
 		System.out.println("##animal定义#"+animalDefinition);
+		//修改定义
+		propertyValues.addPropertyValue("age", 76);
 	}
 }

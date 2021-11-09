@@ -309,6 +309,7 @@ public class DefaultBeanDefinitionDocumentReader implements BeanDefinitionDocume
 	 */
 	//单个bean解析和注册
 	protected void processBeanDefinition(Element ele, BeanDefinitionParserDelegate delegate) {
+		//**核心方法**
 		BeanDefinitionHolder bdHolder = delegate.parseBeanDefinitionElement(ele);
 		if (bdHolder != null) {
 			//再次解析：这里是单独处理<bean>下的自定义属性标签的解析

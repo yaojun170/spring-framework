@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+	http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+	<import resource="bean-aop-base.xml" />
+
+	<bean id="myLogRecorder" class="cn.yj.aop.MyLogRecorder" />
+	<bean id="xmlAspect" class="cn.yj.aop.xml.XmlAspect" />
+
+	<aop:config>
+		<!-- aop:point可以放在外面(公用)，也可以放到aop:aspect里面 -->
+		<aop:pointcut id="logPoint" expression="within(cn.yj.aop.service.*)"/>
+		<aop:aspect ref="myLogRecorder">
+			<aop:before method="before" pointcut-ref="logPoint"/>
+			<aop:after method="after" pointcut-ref="logPoint"/>
+		</aop:aspect>
+
+
+		<!-- 可以配置多个切面
+		<aop:aspect ref="xmlAspect">
+		</aop:aspect>-->
+	</aop:config>
+
+</beans>

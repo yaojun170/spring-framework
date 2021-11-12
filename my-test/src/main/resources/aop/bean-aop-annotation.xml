@@ -13,9 +13,11 @@
 
 	<import resource="bean-aop-base.xml" />
 
-	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+	<!--源码解析：AopNamespaceHandler -->
+	<aop:aspectj-autoproxy ></aop:aspectj-autoproxy>
 
 	<bean class="cn.yj.aop.annotation.MyAnnotationAspect" />
+	<bean class="cn.yj.aop.annotation.MyAnnotationLoggerAspect" />
 
 
 </beans>

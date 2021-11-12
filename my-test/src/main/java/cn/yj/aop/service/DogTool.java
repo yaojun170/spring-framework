@@ -1,6 +1,8 @@
 package cn.yj.aop.service;
 
 
+import java.util.Random;
+
 /**
  * @Description
  * @Author yaojun
@@ -11,6 +13,11 @@ public class DogTool {
 		System.out.println("--Dog eat start--"+food);
 		if(food!=null){
 //			throw new RuntimeException("test exception");
+		}
+		try {
+			Thread.sleep(new Random().nextInt(2000));
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 		System.out.println("--Dog eat end--"+food);
 		return food+":好吃!";

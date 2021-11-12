@@ -2,6 +2,7 @@ package cn.yj.ioc.annotion;
 
 import cn.yj.demo.Animal;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
  * @Author yaojun
  * @Date 2021-11-05
  */
+@ComponentScan("cn.yj.ioc.annotion.service")
 @Configuration
 public class MyConfiguration {
 	@Bean(name = "animal")

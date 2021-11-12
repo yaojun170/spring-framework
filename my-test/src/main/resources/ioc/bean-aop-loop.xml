@@ -11,14 +11,13 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
-<!--	<import resource="bean-aop-base.xml" />-->
 
-	<bean id="dog" class="cn.yj.aop.service.DogTool" />
-	<!--源码解析：AopNamespaceHandler -->
-	<aop:aspectj-autoproxy ></aop:aspectj-autoproxy>
+	<bean id="bar" class="cn.yj.ioc.loop.Bar" lazy-init="true">
+		<constructor-arg name="foo" ref="foo" />
+	</bean>
 
-	<bean class="cn.yj.aop.annotation.MyAnnotationAspect" />
-	<bean class="cn.yj.aop.annotation.MyAnnotationLoggerAspect" />
-
+	<bean id="foo" class="cn.yj.ioc.loop.Foo">
+		<constructor-arg name="bar" ref="bar"/>
+	</bean>
 
 </beans>

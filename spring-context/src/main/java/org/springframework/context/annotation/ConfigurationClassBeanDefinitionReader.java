@@ -139,6 +139,7 @@ class ConfigurationClassBeanDefinitionReader {
 			registerBeanDefinitionForImportedConfigurationClass(configClass);
 		}
 		for (BeanMethod beanMethod : configClass.getBeanMethods()) {
+			// 判断当前的bean中是否含有@Bean注解的方法，如果有，需要把这些方法产生的bean放入到BeanDefinitionMap当中
 			loadBeanDefinitionsForBeanMethod(beanMethod);
 		}
 

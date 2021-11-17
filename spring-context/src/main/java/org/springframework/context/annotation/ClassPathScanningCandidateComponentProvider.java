@@ -427,10 +427,11 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 				if (resource.isReadable()) {
 					try {
 						MetadataReader metadataReader = getMetadataReaderFactory().getMetadataReader(resource);
-						if (isCandidateComponent(metadataReader)) {
+						if (isCandidateComponent(metadataReader)) {//判断候选是否满足包含@Component
+							//包装成BeanDefinition
 							ScannedGenericBeanDefinition sbd = new ScannedGenericBeanDefinition(metadataReader);
 							sbd.setSource(resource);
-							if (isCandidateComponent(sbd)) {
+							if (isCandidateComponent(sbd)) {//判断候选类是否符合条件
 								if (debugEnabled) {
 									logger.debug("Identified candidate component class: " + resource);
 								}
@@ -523,6 +524,7 @@ public class ClassPathScanningCandidateComponentProvider implements EnvironmentC
 	 */
 	protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
 		AnnotationMetadata metadata = beanDefinition.getMetadata();
+		//判断接口不是接口也不是抽象类，metadata.isConcrete()
 		return (metadata.isIndependent() && (metadata.isConcrete() ||
 				(metadata.isAbstract() && metadata.hasAnnotatedMethods(Lookup.class.getName()))));
 	}

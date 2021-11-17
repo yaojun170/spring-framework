@@ -80,7 +80,7 @@ class ConfigurationClassEnhancer {
 			NoOp.INSTANCE
 	};
 
-	private static final ConditionalCallbackFilter CALLBACK_FILTER = new ConditionalCallbackFilter(CALLBACKS);
+	private static final ConditionalCallbackFilter CALLBACK_FILTER = new ConditionalCallbackFilter(CALLBACKS);//注意构造函数
 
 	private static final String BEAN_FACTORY_FIELD = "$$beanFactory";
 
@@ -121,10 +121,13 @@ class ConfigurationClassEnhancer {
 	private Enhancer newEnhancer(Class<?> configSuperClass, @Nullable ClassLoader classLoader) {
 		Enhancer enhancer = new Enhancer();
 		enhancer.setSuperclass(configSuperClass);
-		enhancer.setInterfaces(new Class<?>[] {EnhancedConfiguration.class});
+		enhancer.setInterfaces(new Class<?>[] {EnhancedConfiguration.class});//为新创建的代理对象设置一个父接口
 		enhancer.setUseFactory(false);
 		enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
 		enhancer.setStrategy(new BeanFactoryAwareGeneratorStrategy(classLoader));
+		// 添加了两个MethodInterceptor。(BeanMethodInterceptor和BeanFactoryAwareMethodInterceptor)
+		// 前者是对加了@Bean注解的方法进行增强，后者是为代理对象的beanFactory属性进行增强
+		// 被代理的对象，如何对方法进行增强呢？就是通过MethodInterceptor拦截器实现的，那么在每次代理对象的方法时，都会先经过MethodInterceptor中的方法
 		enhancer.setCallbackFilter(CALLBACK_FILTER);
 		enhancer.setCallbackTypes(CALLBACK_FILTER.getCallbackTypes());
 		return enhancer;

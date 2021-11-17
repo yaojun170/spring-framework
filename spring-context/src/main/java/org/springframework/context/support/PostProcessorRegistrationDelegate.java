@@ -123,6 +123,9 @@ final class PostProcessorRegistrationDelegate {
 				currentRegistryProcessors.clear();
 			}
 
+			//上面就是调用BeanDefinitionRegistryPostProcessor.postProcessBeanDefinitionRegistry()方法
+			//下面就是调用BeanDefinitionRegistryPostProcessor.postProcessBeanFactory()方法
+
 			// Now, invoke the postProcessBeanFactory callback of all processors handled so far.
 			invokeBeanFactoryPostProcessors(registryProcessors, beanFactory);
 			invokeBeanFactoryPostProcessors(regularPostProcessors, beanFactory);
@@ -133,6 +136,7 @@ final class PostProcessorRegistrationDelegate {
 			invokeBeanFactoryPostProcessors(beanFactoryPostProcessors, beanFactory);
 		}
 
+		//下面是调用除了BeanDefinitionRegistryPostProcessor之外的BeanFactoryPostProcessor.postProcessBeanFactory()方法
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean factory post-processors apply to them!
 		/**

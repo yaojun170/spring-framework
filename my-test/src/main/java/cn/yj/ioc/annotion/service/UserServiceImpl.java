@@ -1,13 +1,14 @@
 package cn.yj.ioc.annotion.service;
 
-import org.springframework.stereotype.Service;
+
+import org.springframework.stereotype.Component;
 
 /**
  * @Description
  * @Author yaojun
  * @Date 2021-11-10
  */
-@Service
+@Component
 public class UserServiceImpl implements UserService {
 	@Override
 	public String queryName(int idCard) {

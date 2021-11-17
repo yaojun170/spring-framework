@@ -59,6 +59,7 @@ public abstract class AbstractTypeHierarchyTraversingFilter implements TypeFilte
 
 		// This method optimizes avoiding unnecessary creation of ClassReaders
 		// as well as visiting over those readers.
+		//判断是否有@Component的注解
 		if (matchSelf(metadataReader)) {
 			return true;
 		}

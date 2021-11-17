@@ -86,6 +86,7 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 				ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS);
 
 		// Actually scan for bean definitions and register them.
+		//解析<context:component-scan>,组装成一个扫描器
 		ClassPathBeanDefinitionScanner scanner = configureScanner(parserContext, element);
 		Set<BeanDefinitionHolder> beanDefinitions = scanner.doScan(basePackages);
 		registerComponents(parserContext.getReaderContext(), beanDefinitions, element);
@@ -93,8 +94,11 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		return null;
 	}
 
+	//解析<context:component-scan>标签
 	protected ClassPathBeanDefinitionScanner configureScanner(ParserContext parserContext, Element element) {
 		boolean useDefaultFilters = true;
+		// 是否用默认的过滤器 --> 这里解释一下，其实这个过滤器就是指我们那些注解@Service等。
+		// 其实这里就是定义那些注解是我们扫描到了之后会把它纳入IOC管理的，具体代码之后解析的时候会看到
 		if (element.hasAttribute(USE_DEFAULT_FILTERS_ATTRIBUTE)) {
 			useDefaultFilters = Boolean.valueOf(element.getAttribute(USE_DEFAULT_FILTERS_ATTRIBUTE));
 		}
@@ -143,6 +147,7 @@ public class ComponentScanBeanDefinitionParser implements BeanDefinitionParser {
 		}
 
 		// Register annotation config processors, if necessary.
+		// 注册注解处理器组件
 		boolean annotationConfig = true;
 		if (element.hasAttribute(ANNOTATION_CONFIG_ATTRIBUTE)) {
 			annotationConfig = Boolean.valueOf(element.getAttribute(ANNOTATION_CONFIG_ATTRIBUTE));

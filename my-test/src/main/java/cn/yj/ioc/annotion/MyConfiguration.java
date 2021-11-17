@@ -1,9 +1,8 @@
 package cn.yj.ioc.annotion;
 
 import cn.yj.demo.Animal;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.*;
 
 /**
  * @Description
@@ -12,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ComponentScan("cn.yj.ioc.annotion.service")
 @Configuration
+@Import(MyOtherConfiguration.class)
 public class MyConfiguration {
 	@Bean(name = "animal")
 	public Animal getAnimal(){

@@ -129,7 +129,7 @@ class ComponentScanAnnotationParser {
 				return declaringClass.equals(className);
 			}
 		});
-		return scanner.doScan(StringUtils.toStringArray(basePackages));
+		return scanner.doScan(StringUtils.toStringArray(basePackages));//扫描出这个包及子包下的class，然后将其解析成BeanDefinition
 	}
 
 	private List<TypeFilter> typeFiltersFor(AnnotationAttributes filterAttributes) {

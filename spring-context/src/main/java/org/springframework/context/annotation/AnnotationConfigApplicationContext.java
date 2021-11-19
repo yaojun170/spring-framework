@@ -84,7 +84,7 @@ public class AnnotationConfigApplicationContext extends GenericApplicationContex
 	 */
 	public AnnotationConfigApplicationContext(Class<?>... annotatedClasses) {
 		this();
-		register(annotatedClasses);
+		register(annotatedClasses);//将配置类封装成BeanDefinition->AnnotatedGenericBeanDefinition，并注册到registry
 		refresh();
 	}
 

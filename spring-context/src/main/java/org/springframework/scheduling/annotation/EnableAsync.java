@@ -160,7 +160,7 @@ import org.springframework.core.Ordered;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(AsyncConfigurationSelector.class)
+@Import(AsyncConfigurationSelector.class)//这是重点，导入一个ImportSelector
 public @interface EnableAsync {
 
 	/**
@@ -172,6 +172,7 @@ public @interface EnableAsync {
 	 * custom annotation type to indicate that a method (or all methods of
 	 * a given class) should be invoked asynchronously.
 	 */
+	//检查需要的注解，默认情况就是检查@Async注解
 	Class<? extends Annotation> annotation() default Annotation.class;
 
 	/**
@@ -186,6 +187,7 @@ public @interface EnableAsync {
 	 * negative impact in practice unless one is explicitly expecting one type of proxy
 	 * vs. another &mdash; for example, in tests.
 	 */
+	//是使用jdk动态代理还是cglib代理
 	boolean proxyTargetClass() default false;
 
 	/**

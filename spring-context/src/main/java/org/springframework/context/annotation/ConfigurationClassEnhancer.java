@@ -309,6 +309,7 @@ class ConfigurationClassEnhancer {
 	 */
 	private static class BeanMethodInterceptor implements MethodInterceptor, ConditionalCallback {
 
+		//增强@Bean方法，在实际方法调用之前检查BeanFactory中是否已经存在bean对象
 		/**
 		 * Enhance a {@link Bean @Bean} method to check the supplied BeanFactory for the
 		 * existence of this bean object.

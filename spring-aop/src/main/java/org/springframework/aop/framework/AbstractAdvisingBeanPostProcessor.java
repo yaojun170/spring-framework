@@ -61,8 +61,10 @@ public abstract class AbstractAdvisingBeanPostProcessor extends ProxyProcessorSu
 		return bean;
 	}
 
+	//完成代理
 	@Override
 	public Object postProcessAfterInitialization(Object bean, String beanName) {
+		//advisor是AsyncAnnotationAdvisor，在AsyncAnnotationBeanPostProcessor.setBeanFactory方法中设置
 		if (this.advisor == null || bean instanceof AopInfrastructureBean) {
 			// Ignore AOP infrastructure such as scoped proxies.
 			return bean;
@@ -82,6 +84,7 @@ public abstract class AbstractAdvisingBeanPostProcessor extends ProxyProcessorSu
 			}
 		}
 
+		//判断哪些bean需要被代理
 		if (isEligible(bean, beanName)) {
 			ProxyFactory proxyFactory = prepareProxyFactory(bean, beanName);
 			if (!proxyFactory.isProxyTargetClass()) {

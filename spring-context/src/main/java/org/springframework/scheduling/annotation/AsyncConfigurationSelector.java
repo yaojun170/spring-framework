@@ -46,7 +46,7 @@ public class AsyncConfigurationSelector extends AdviceModeImportSelector<EnableA
 	@Nullable
 	public String[] selectImports(AdviceMode adviceMode) {
 		switch (adviceMode) {
-			case PROXY:
+			case PROXY://重点，注册ProxyAsyncConfiguration配置类，这个类作用是向容器中添加一个AsyncAnnotationBeanPostProcessor
 				return new String[] {ProxyAsyncConfiguration.class.getName()};
 			case ASPECTJ:
 				return new String[] {ASYNC_EXECUTION_ASPECT_CONFIGURATION_CLASS_NAME};

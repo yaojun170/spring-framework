@@ -1,5 +1,6 @@
-package cn.yj.ioc.annotion.service;
+package cn.yj.ioc.annotion.service.impl;
 
+import cn.yj.ioc.annotion.service.FooService;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service;
  * @Date 2021-11-12
  */
 @Service
-@DependsOn
-public class FooServiceImpl implements FooService{
+public class FooServiceImpl implements FooService {
 	@Override
 	public void hell() {
 		System.out.println("--FooServiceImpl hello--");

@@ -137,7 +137,7 @@ public class AsyncAnnotationBeanPostProcessor extends AbstractBeanFactoryAwareAd
 			advisor.setAsyncAnnotationType(this.asyncAnnotationType);
 		}
 		advisor.setBeanFactory(beanFactory);
-		this.advisor = advisor;
+		this.advisor = advisor;//关键点
 	}
 
 }

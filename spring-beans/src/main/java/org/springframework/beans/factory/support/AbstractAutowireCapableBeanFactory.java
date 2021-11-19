@@ -1098,7 +1098,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			return obtainFromSupplier(instanceSupplier, beanName);
 		}
 
-		if (mbd.getFactoryMethodName() != null) {//配置使用了factory-method
+		if (mbd.getFactoryMethodName() != null) {
+			//通过factory-method来实例化对象，通常使用@Bean方式时实例化bean
 			return instantiateUsingFactoryMethod(beanName, mbd, args);
 		}
 
@@ -1339,6 +1340,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				for (BeanPostProcessor bp : getBeanPostProcessors()) {
 					if (bp instanceof InstantiationAwareBeanPostProcessor) {
 						InstantiationAwareBeanPostProcessor ibp = (InstantiationAwareBeanPostProcessor) bp;
+						//@Autowired和@Value就是在这里完成注入
 						pvs = ibp.postProcessPropertyValues(pvs, filteredPds, bw.getWrappedInstance(), beanName);
 						if (pvs == null) {
 							return;

@@ -159,6 +159,7 @@ public abstract class AsyncExecutionAspectSupport implements BeanFactoryAware {
 				if (targetExecutor == null) {
 					synchronized (this.executors) {
 						if (this.defaultExecutor == null) {
+							//获取默认线程池，不存在自动生成SimpleAsyncTaskExecutor线程池供使用
 							this.defaultExecutor = getDefaultExecutor(this.beanFactory);
 						}
 						targetExecutor = this.defaultExecutor;
@@ -224,7 +225,7 @@ public abstract class AsyncExecutionAspectSupport implements BeanFactoryAware {
 				// Search for TaskExecutor bean... not plain Executor since that would
 				// match with ScheduledExecutorService as well, which is unusable for
 				// our purposes here. TaskExecutor is more clearly designed for it.
-				return beanFactory.getBean(TaskExecutor.class);
+				return beanFactory.getBean(TaskExecutor.class);//获取TaskExecutor类型的线程池
 			}
 			catch (NoUniqueBeanDefinitionException ex) {
 				logger.debug("Could not find unique TaskExecutor bean", ex);

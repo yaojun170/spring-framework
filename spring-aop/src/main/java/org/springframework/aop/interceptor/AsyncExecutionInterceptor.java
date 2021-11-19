@@ -90,6 +90,7 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 	}
 
 
+	//核心方法，拦截@Async实现异步调用
 	/**
 	 * Intercept the given method invocation, submit the actual calling of the method to
 	 * the correct task executor and return immediately to the caller.
@@ -104,12 +105,17 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 		Method specificMethod = ClassUtils.getMostSpecificMethod(invocation.getMethod(), targetClass);
 		final Method userDeclaredMethod = BridgeMethodResolver.findBridgedMethod(specificMethod);
 
+		/**
+		 * 先获取一个线程池，从BeanFactory中获取TaskExecutor
+		 * 如果容器中没有，默认生成一个SimpleAsyncTaskExecutor
+		 */
 		AsyncTaskExecutor executor = determineAsyncExecutor(userDeclaredMethod);
 		if (executor == null) {
 			throw new IllegalStateException(
 					"No executor specified and no default executor set on AsyncExecutionInterceptor either");
 		}
 
+		//将被调用的方法包装成Callable丢给线程池执行
 		Callable<Object> task = () -> {
 			try {
 				Object result = invocation.proceed();
@@ -155,7 +161,7 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 	@Nullable
 	protected Executor getDefaultExecutor(@Nullable BeanFactory beanFactory) {
 		Executor defaultExecutor = super.getDefaultExecutor(beanFactory);
-		return (defaultExecutor != null ? defaultExecutor : new SimpleAsyncTaskExecutor());
+		return (defaultExecutor != null ? defaultExecutor : new SimpleAsyncTaskExecutor());//不存在自动生成
 	}
 
 	@Override

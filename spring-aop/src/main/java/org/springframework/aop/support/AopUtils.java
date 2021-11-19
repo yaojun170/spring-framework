@@ -265,6 +265,7 @@ public abstract class AopUtils {
 	 * @param targetClass class we're testing
 	 * @return whether the pointcut can apply on any method
 	 */
+	//判断是否advisor是否能应用到给定的类上，通过pointcut判断
 	public static boolean canApply(Advisor advisor, Class<?> targetClass) {
 		return canApply(advisor, targetClass, false);
 	}

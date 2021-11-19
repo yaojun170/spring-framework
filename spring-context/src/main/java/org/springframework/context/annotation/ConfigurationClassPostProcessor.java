@@ -239,7 +239,6 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 * Prepare the Configuration classes for servicing bean requests at runtime
 	 * by replacing them with CGLIB-enhanced subclasses.
 	 */
-	//拦截@Bean方法来确保增强执行@Bean方法的语义
 	//该方法是对BeanFactory进行处理，用来干预BeanFactory的创建过程。主要干了两件事，
 	// (1)对加了@Configuration注解的类进行CGLIB代理。
 	// (2)向Spring中添加一个后置处理器ImportAwareBeanPostProcessor。
@@ -267,7 +266,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 * {@link Configuration} classes.
 	 */
 	public void processConfigBeanDefinitions(BeanDefinitionRegistry registry) {
-		List<BeanDefinitionHolder> configCandidates = new ArrayList<>();
+		List<BeanDefinitionHolder> configCandidates = new ArrayList<>();//所有待处理的configuration类
 		String[] candidateNames = registry.getBeanDefinitionNames();
 
 		//从bean中找到@Configuration的bean
@@ -323,9 +322,9 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		Set<BeanDefinitionHolder> candidates = new LinkedHashSet<>(configCandidates);
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
 		do {
-			// **核心方法： 解析配置类，在此处会解析配置类上的注解(ComponentScan扫描出的类，@Import注册的类，以及@Bean方法定义的类)
+			// **核心方法： 解析配置类上的注解(ComponentScan扫描出的类，@Import注册的类，以及@Bean方法定义的类)
 			// 注意：这一步只会将加了@Configuration注解以及通过@ComponentScan注解扫描的类才会加入到BeanDefinitionMap中
-			// 通过其他注解(例如@Import、@Bean)的方式，在parse()方法这一步并不会将其解析为BeanDefinition放入到BeanDefinitionMap中，而是先解析成ConfigurationClass类
+			// 而其他注解(例如@Import、@Bean)这一步并不会将其解析为BeanDefinition，而是先解析成ConfigurationClass类
 			// 真正放入到map中是在下面的this.reader.loadBeanDefinitions()方法中实现的
 			parser.parse(candidates);
 			// 校验 配置类不能使final的，因为需要使用CGLIB生成代理对象，见postProcessBeanFactory方
@@ -340,7 +339,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 						registry, this.sourceExtractor, this.resourceLoader, this.environment,
 						this.importBeanNameGenerator, parser.getImportRegistry());
 			}
-			//将通过@Import、@Bean等注解方式注册的类解析成BeanDefinition，然后注册到BeanDefinitionMap中。
+			//将通过@Bean等注解方式注册的类解析成BeanDefinition，然后注册到BeanDefinitionMap中。
 			this.reader.loadBeanDefinitions(configClasses);
 			alreadyParsed.addAll(configClasses);
 
@@ -386,6 +385,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 	 */
 	public void enhanceConfigurationClasses(ConfigurableListableBeanFactory beanFactory) {
 		Map<String, AbstractBeanDefinition> configBeanDefs = new LinkedHashMap<>();
+		//找到beanFactory中所有的@Configuration类
 		for (String beanName : beanFactory.getBeanDefinitionNames()) {
 			BeanDefinition beanDef = beanFactory.getBeanDefinition(beanName);
 			if (ConfigurationClassUtils.isFullConfigurationClass(beanDef)) {
@@ -407,6 +407,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 			return;
 		}
 
+		//创建增强类
 		ConfigurationClassEnhancer enhancer = new ConfigurationClassEnhancer();
 		for (Map.Entry<String, AbstractBeanDefinition> entry : configBeanDefs.entrySet()) {
 			AbstractBeanDefinition beanDef = entry.getValue();
@@ -416,7 +417,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 				// Set enhanced subclass of the user-specified bean class
 				Class<?> configClass = beanDef.resolveBeanClass(this.beanClassLoader);
 				if (configClass != null) {
-					Class<?> enhancedClass = enhancer.enhance(configClass, this.beanClassLoader);
+					Class<?> enhancedClass = enhancer.enhance(configClass, this.beanClassLoader);//创建增强类
 					if (configClass != enhancedClass) {
 						if (logger.isDebugEnabled()) {
 							logger.debug(String.format("Replacing bean definition '%s' existing class '%s' with " +
@@ -447,6 +448,7 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 
 			// Inject the BeanFactory before AutowiredAnnotationBeanPostProcessor's
 			// postProcessPropertyValues method attempts to autowire other configuration beans.
+			// 为被CGLIB增强时实现了EnhancedConfiguration接口的代理类，设置beanFactory属性
 			if (bean instanceof EnhancedConfiguration) {
 				((EnhancedConfiguration) bean).setBeanFactory(this.beanFactory);
 			}

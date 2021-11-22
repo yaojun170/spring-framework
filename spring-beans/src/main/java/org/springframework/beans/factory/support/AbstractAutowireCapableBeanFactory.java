@@ -588,6 +588,8 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		if (earlySingletonExposure) {
+			//这里校验最终生成bean实例:exposedObject和之前提前注册进去的bean:earlySingletonReference是否相同
+			//按理说得一致才行，但是存在一种情况，生成exposedObject的过程修改了bean，可能生成了代理，比如@Async，导致前后的bean实例不一致，下面就直接报错
 			Object earlySingletonReference = getSingleton(beanName, false);
 			if (earlySingletonReference != null) {
 				if (exposedObject == bean) {

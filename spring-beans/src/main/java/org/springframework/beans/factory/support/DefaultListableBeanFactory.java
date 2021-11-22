@@ -1018,7 +1018,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 			Map<String, Object> candidates = new LinkedHashMap<>(candidateNames.length);
 			for (String beanName : candidateNames) {
 				if (containsSingleton(beanName) && args == null) {
-					Object beanInstance = getBean(beanName);
+					Object beanInstance = getBean(beanName);//获取bean实例
 					candidates.put(beanName, (beanInstance instanceof NullBean ? null : beanInstance));
 				}
 				else {

@@ -43,6 +43,7 @@ import org.springframework.lang.Nullable;
  * @see org.springframework.transaction.support.DefaultTransactionDefinition
  * @see org.springframework.transaction.interceptor.TransactionAttribute
  */
+//描述事务的具体规则：隔离性，传播性，回滚原则，超时时间，是否只读
 public interface TransactionDefinition {
 
 	/**
@@ -51,6 +52,7 @@ public interface TransactionDefinition {
 	 * <p>This is typically the default setting of a transaction definition,
 	 * and typically defines a transaction synchronization scope.
 	 */
+	//支持当前事务，没有则新建一个
 	int PROPAGATION_REQUIRED = 0;
 
 	/**
@@ -72,6 +74,7 @@ public interface TransactionDefinition {
 	 * @see org.springframework.transaction.support.AbstractPlatformTransactionManager#setTransactionSynchronization
 	 * @see org.springframework.transaction.support.AbstractPlatformTransactionManager#SYNCHRONIZATION_ON_ACTUAL_TRANSACTION
 	 */
+	//支持当前事务，没有事务则以非事务运行，指如果当前存在逻辑事务，就加入到该逻辑事务
 	int PROPAGATION_SUPPORTS = 1;
 
 	/**
@@ -80,6 +83,7 @@ public interface TransactionDefinition {
 	 * <p>Note that transaction synchronization within a {@code PROPAGATION_MANDATORY}
 	 * scope will always be driven by the surrounding transaction.
 	 */
+	//支持一个当前事务，如果没有事务抛出异常
 	int PROPAGATION_MANDATORY = 2;
 
 	/**
@@ -95,6 +99,7 @@ public interface TransactionDefinition {
 	 * and resumed appropriately.
 	 * @see org.springframework.transaction.jta.JtaTransactionManager#setTransactionManager
 	 */
+	//创建一个新事务，暂停当前事务
 	int PROPAGATION_REQUIRES_NEW = 3;
 
 	/**
@@ -110,6 +115,7 @@ public interface TransactionDefinition {
 	 * will be suspended and resumed appropriately.
 	 * @see org.springframework.transaction.jta.JtaTransactionManager#setTransactionManager
 	 */
+	// 不支持当前事务，始终以非事务形式运行，当前存在事务则暂停
 	int PROPAGATION_NOT_SUPPORTED = 4;
 
 	/**
@@ -118,6 +124,7 @@ public interface TransactionDefinition {
 	 * <p>Note that transaction synchronization is <i>not</i> available within a
 	 * {@code PROPAGATION_NEVER} scope.
 	 */
+	//不支持事务，以非事务方式执行，如果当前存在事务则抛出异常
 	int PROPAGATION_NEVER = 5;
 
 	/**

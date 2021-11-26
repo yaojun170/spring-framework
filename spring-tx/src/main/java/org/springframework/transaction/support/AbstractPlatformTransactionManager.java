@@ -339,6 +339,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 */
 	@Override
 	public final TransactionStatus getTransaction(@Nullable TransactionDefinition definition) throws TransactionException {
+		// 获取事务管理对象DataSourceTransactionObject，从实现可以知道，这里是尝试获取已有的事务管理对象，这里已有的就是指“传播”来的事务。
 		Object transaction = doGetTransaction();
 
 		// Cache debug flag to avoid repeated checks.
@@ -360,14 +361,14 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		}
 
 		// No existing transaction found -> check propagation behavior to find out how to proceed.
-		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_MANDATORY) {
+		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_MANDATORY) {//PROPAGATION_MANDATORY：没有事务，抛出异常
 			throw new IllegalTransactionStateException(
 					"No existing transaction found for transaction marked with propagation 'mandatory'");
 		}
 		else if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRED ||
 				definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_REQUIRES_NEW ||
 				definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NESTED) {
-			SuspendedResourcesHolder suspendedResources = suspend(null);
+			SuspendedResourcesHolder suspendedResources = suspend(null);//暂停当前事务，但是因为当前不存在事务，只能挂起null
 			if (debugEnabled) {
 				logger.debug("Creating new transaction with name [" + definition.getName() + "]: " + definition);
 			}
@@ -375,7 +376,12 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				boolean newSynchronization = (getTransactionSynchronization() != SYNCHRONIZATION_NEVER);
 				DefaultTransactionStatus status = newTransactionStatus(
 						definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
+				//get一个新的数据库连接
+				//将新的数据库连接设置到事务对象上
+				//关闭自动提交
+				//将数据库连接绑定到当前线程上，具体是：ConnectionHolder
 				doBegin(transaction, definition);
+				//初始化List<TransactionSynchronization>
 				prepareSynchronization(status, definition);
 				return status;
 			}
@@ -402,12 +408,12 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 			TransactionDefinition definition, Object transaction, boolean debugEnabled)
 			throws TransactionException {
 
-		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NEVER) {
+		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NEVER) {//不支持事务，以非事务运行，存在事务抛出异常
 			throw new IllegalTransactionStateException(
 					"Existing transaction found for transaction marked with propagation 'never'");
 		}
 
-		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {
+		if (definition.getPropagationBehavior() == TransactionDefinition.PROPAGATION_NOT_SUPPORTED) {//不支持事务，挂起当前事务以非事务运行
 			if (debugEnabled) {
 				logger.debug("Suspending current transaction");
 			}
@@ -447,6 +453,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				logger.debug("Creating nested transaction with name [" + definition.getName() + "]");
 			}
 			if (useSavepointForNestedTransaction()) {
+				//通过mysql自带savepoint来实现嵌套事务
 				// Create savepoint within existing Spring-managed transaction,
 				// through the SavepointManager API implemented by TransactionStatus.
 				// Usually uses JDBC 3.0 savepoints. Never activates Spring synchronization.
@@ -595,8 +602,8 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		}
 		else if (transaction != null) {
 			// Transaction active but no synchronization active.
-			Object suspendedResources = doSuspend(transaction);
-			return new SuspendedResourcesHolder(suspendedResources);
+			Object suspendedResources = doSuspend(transaction);//清空当前线程绑定的连接
+			return new SuspendedResourcesHolder(suspendedResources);//将被暂停的资源(连接)返回
 		}
 		else {
 			// Neither transaction nor synchronization active.

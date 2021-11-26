@@ -34,6 +34,7 @@ package org.springframework.transaction;
  * @see TransactionDefinition#PROPAGATION_NESTED
  * @see java.sql.Savepoint
  */
+//对事务中上述保存点功能的封装，Spring利用保存点功能实现了事务的嵌套功能
 public interface SavepointManager {
 
 	/**

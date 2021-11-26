@@ -257,11 +257,11 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 		try {
 			if (!txObject.hasConnectionHolder() ||
 					txObject.getConnectionHolder().isSynchronizedWithTransaction()) {
-				Connection newCon = obtainDataSource().getConnection();
+				Connection newCon = obtainDataSource().getConnection();//get一个新的数据库连接对象
 				if (logger.isDebugEnabled()) {
 					logger.debug("Acquired Connection [" + newCon + "] for JDBC transaction");
 				}
-				txObject.setConnectionHolder(new ConnectionHolder(newCon), true);
+				txObject.setConnectionHolder(new ConnectionHolder(newCon), true);//将新的数据库连接设置到事务对象上
 			}
 
 			txObject.getConnectionHolder().setSynchronizedWithTransaction(true);
@@ -278,7 +278,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 				if (logger.isDebugEnabled()) {
 					logger.debug("Switching JDBC Connection [" + con + "] to manual commit");
 				}
-				con.setAutoCommit(false);
+				con.setAutoCommit(false);//关闭自动提交
 			}
 
 			prepareTransactionalConnection(con, definition);
@@ -291,6 +291,7 @@ public class DataSourceTransactionManager extends AbstractPlatformTransactionMan
 
 			// Bind the connection holder to the thread.
 			if (txObject.isNewConnectionHolder()) {
+				//将数据库连接绑定到当前线程上，具体是：ConnectionHolder
 				TransactionSynchronizationManager.bindResource(obtainDataSource(), txObject.getConnectionHolder());
 			}
 		}

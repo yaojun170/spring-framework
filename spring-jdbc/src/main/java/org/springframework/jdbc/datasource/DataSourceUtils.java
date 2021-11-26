@@ -100,6 +100,7 @@ public abstract class DataSourceUtils {
 	public static Connection doGetConnection(DataSource dataSource) throws SQLException {
 		Assert.notNull(dataSource, "No DataSource specified");
 
+		//如果存在事务：数据库连接需要从当前线程ThreadLocal中获取，而不是直接从DataSource新建
 		ConnectionHolder conHolder = (ConnectionHolder) TransactionSynchronizationManager.getResource(dataSource);
 		if (conHolder != null && (conHolder.hasConnection() || conHolder.isSynchronizedWithTransaction())) {
 			conHolder.requested();
@@ -112,7 +113,7 @@ public abstract class DataSourceUtils {
 		// Else we either got no holder or an empty thread-bound holder here.
 
 		logger.debug("Fetching JDBC Connection from DataSource");
-		Connection con = fetchConnection(dataSource);
+		Connection con = fetchConnection(dataSource);//从数据源borrow一个新连接
 
 		if (TransactionSynchronizationManager.isSynchronizationActive()) {
 			try {
@@ -130,7 +131,7 @@ public abstract class DataSourceUtils {
 						new ConnectionSynchronization(holderToUse, dataSource));
 				holderToUse.setSynchronizedWithTransaction(true);
 				if (holderToUse != conHolder) {
-					TransactionSynchronizationManager.bindResource(dataSource, holderToUse);
+					TransactionSynchronizationManager.bindResource(dataSource, holderToUse);//将新连接绑定到线程上
 				}
 			}
 			catch (RuntimeException ex) {

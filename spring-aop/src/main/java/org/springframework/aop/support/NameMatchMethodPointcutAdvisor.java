@@ -29,6 +29,7 @@ import org.springframework.aop.Pointcut;
  * @author Rob Harrop
  * @see NameMatchMethodPointcut
  */
+//使用 NameMatchPointcutAdvisor时创建的 Advisor, 主要是通过 方法名来匹配是否执行 Advice
 @SuppressWarnings("serial")
 public class NameMatchMethodPointcutAdvisor extends AbstractGenericPointcutAdvisor {
 

@@ -37,6 +37,7 @@ import java.lang.reflect.AccessibleObject;
  * @author Rod Johnson
  * @see Interceptor
  */
+//此接口表示运行时的连接点（AOP术语）
 public interface Joinpoint {
 
 	/**
@@ -46,6 +47,7 @@ public interface Joinpoint {
 	 * @return see the children interfaces' proceed definition
 	 * @throws Throwable if the joinpoint throws an exception
 	 */
+	//执行此拦截点，并进入下一个连接点
 	Object proceed() throws Throwable;
 
 	/**
@@ -53,6 +55,7 @@ public interface Joinpoint {
 	 * <p>For instance, the target object for an invocation.
 	 * @return the object (can be null if the accessible object is static)
 	 */
+	//保存当前连接点静态对象，这里一般指的是target
 	Object getThis();
 
 	/**

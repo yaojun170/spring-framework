@@ -1,12 +1,11 @@
-package cn.yj.mysql.jdbc2.service.impl;
+package cn.yj.db.jdbc2.service.impl;
 
-import cn.yj.mysql.jdbc2.po.User;
-import cn.yj.mysql.jdbc2.po.UserRowMapper;
-import cn.yj.mysql.jdbc2.service.UserDao;
+import cn.yj.db.jdbc2.po.User;
+import cn.yj.db.jdbc2.po.UserRowMapper;
+import cn.yj.db.jdbc2.service.UserDao;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
@@ -55,6 +54,10 @@ public class UserDaoImpl implements UserDao {
     public void updateUserById(User user) {
         String sql = "update user set name=?, age=?, sex=? where id=?";
         int update = jdbcTemplate.update(sql, user.getName(), user.getAge(), user.getSex(), user.getId());
+		if(user!=null){
+			System.out.println("--主动触发异常--");
+			throw new RuntimeException("exception,test transaction rollback");
+		}
         System.out.println("更新结果:"+update);
     }
 

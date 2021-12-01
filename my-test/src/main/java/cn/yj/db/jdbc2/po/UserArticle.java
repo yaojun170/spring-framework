@@ -1,4 +1,4 @@
-package cn.yj.mysql.jdbc2.po;
+package cn.yj.db.jdbc2.po;
 
 /**
  * @Description

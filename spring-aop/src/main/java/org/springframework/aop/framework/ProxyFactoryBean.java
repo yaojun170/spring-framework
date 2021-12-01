@@ -88,6 +88,7 @@ import org.springframework.util.ObjectUtils;
  * @see org.springframework.aop.Advisor
  * @see Advised
  */
+//这个类是基于 FactoryBean 的 Proxy创建形式, 其通过代理的 Interface, targetSource 与指定的 interceptorNames 来创建对应的AopProxy, 最后生成对应的代理对象
 @SuppressWarnings("serial")
 public class ProxyFactoryBean extends ProxyCreatorSupport
 		implements FactoryBean<Object>, BeanClassLoaderAware, BeanFactoryAware {

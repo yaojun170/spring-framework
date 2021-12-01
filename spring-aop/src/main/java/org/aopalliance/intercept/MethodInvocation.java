@@ -21,12 +21,19 @@ import java.lang.reflect.Method;
 /**
  * Description of an invocation to a method, given to an interceptor
  * upon method-call.
+ * 描述一个方法调用，在方法调用时给出拦截器
  *
  * <p>A method invocation is a joinpoint and can be intercepted by a
  * method interceptor.
- *
+ * 方法调用是一个连接点，可以被方法拦截器拦截，
  * @author Rod Johnson
  * @see MethodInterceptor
+ */
+/*
+ * 将方法调用中target,method,args等包装成MethodInvocation来代管方法调用proceed()
+ * 参考实现：JDK代理实现ReflectiveMethodInvocation，而CGLIB交给CglibMethodInvocation
+ * 使用场景：MethodInterceptor
+ * 使用参考：JdkDynamicAopProxy.invoke()方法中构造MethodInvocation
  */
 public interface MethodInvocation extends Invocation {
 

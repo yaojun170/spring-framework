@@ -42,6 +42,7 @@ import org.springframework.lang.Nullable;
  * @since 2.0
  */
 @SuppressWarnings("serial")
+//Spring解析被 @AspectJ注解注释的类时生成的 Advisor, 而这个 Advisor中的 Pointcut与Advice都是由 ReflectiveAspectJAdvisorFactory 来解析生成的
 class InstantiationModelAwarePointcutAdvisorImpl
 		implements InstantiationModelAwarePointcutAdvisor, AspectJPrecedenceInformation, Serializable {
 

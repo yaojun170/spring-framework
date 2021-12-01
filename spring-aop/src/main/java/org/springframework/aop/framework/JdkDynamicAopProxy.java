@@ -208,10 +208,11 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			}
 			else {
 				// We need to create a method invocation...
-				// 责任链模式递归调用
+				// 责任链模式递归调用,最终是通过它，去执行前置加强、后置加强等等逻辑。
 				MethodInvocation invocation =
 						new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
 				// Proceed to the joinpoint through the interceptor chain.
+				// 此处会执行所有的过滤器链+目标方法。
 				retVal = invocation.proceed();
 			}
 

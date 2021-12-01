@@ -32,6 +32,7 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @since 2.0
  */
+//Spring 解析<aop>命名空间时生成的 Advisor, 对于这个类的解析是在 ConfigBeanDefinitionParser
 public class AspectJPointcutAdvisor implements PointcutAdvisor, Ordered {
 
 	private final AbstractAspectJAdvice advice;

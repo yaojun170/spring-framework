@@ -1,8 +1,7 @@
-package cn.yj.mysql.jdbc2.service.impl;
+package cn.yj.db.jdbc2.service.impl;
 
-import cn.yj.mysql.jdbc2.po.User;
-import cn.yj.mysql.jdbc2.po.UserArticle;
-import cn.yj.mysql.jdbc2.service.UserDao2;
+import cn.yj.db.jdbc2.po.User;
+import cn.yj.db.jdbc2.service.UserDao2;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;

@@ -23,6 +23,7 @@ package org.springframework.aop;
  *
  * @author Rod Johnson
  */
+//Spring 中常用的 Advisor, 包含一个 Pointcut 与一个 advice
 public interface PointcutAdvisor extends Advisor {
 
 	/**

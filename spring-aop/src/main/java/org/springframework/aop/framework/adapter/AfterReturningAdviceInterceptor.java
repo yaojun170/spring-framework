@@ -35,6 +35,7 @@ import org.springframework.util.Assert;
  * @see ThrowsAdviceInterceptor
  */
 @SuppressWarnings("serial")
+//这个类其实就是将 AfterReturningAdvice 包裹成 MethodInterceptor 的适配类, 而做对应适配工作的就是 AfterReturningAdviceAdapter
 public class AfterReturningAdviceInterceptor implements MethodInterceptor, AfterAdvice, Serializable {
 
 	private final AfterReturningAdvice advice;

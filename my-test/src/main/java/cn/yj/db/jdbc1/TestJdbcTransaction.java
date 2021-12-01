@@ -1,4 +1,4 @@
-package cn.yj.mysql.jdbc1;
+package cn.yj.db.jdbc1;
 
 import org.junit.Test;
 

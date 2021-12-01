@@ -1,13 +1,9 @@
-package cn.yj.mysql.jdbc2;
+package cn.yj.db.jdbc2;
 
-import cn.yj.mysql.jdbc2.po.User;
-import cn.yj.mysql.jdbc2.po.UserArticle;
-import cn.yj.mysql.jdbc2.service.UserDao;
-import cn.yj.mysql.jdbc2.service.UserDao2;
+import cn.yj.db.jdbc2.po.User;
+import cn.yj.db.jdbc2.service.UserDao2;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import java.util.List;
 
 /**
  * @Description

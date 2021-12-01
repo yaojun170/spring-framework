@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yj.db.mybatis.mapper.UserMapper">
+    <sql id="paramSql">
+        id, name , age, sex
+    </sql>
+
+    <insert id="addUser" parameterType="cn.yj.db.jdbc2.po.User">
+        insert into user(name,age,sex) values(#{name},#{age},#{sex})
+    </insert>
+
+    <select id="queryUserById" parameterType="int" resultType="cn.yj.db.jdbc2.po.User" >
+        select <include refid="paramSql"></include>
+        from user where id=#{userId}
+    </select>
+
+    <select id="queryUsers" resultType="cn.yj.db.jdbc2.po.User" >
+        select <include refid="paramSql"></include>
+        from user
+    </select>
+
+    <select id="queryUsersLikeNameGreatAge" parameterType="map" resultType="cn.yj.db.jdbc2.po.User">
+        select <include refid="paramSql"></include>
+        from user
+        <where>
+            <if test="name!=null">
+                and name = #{name}
+            </if>
+            <if test="age!=-1">
+                and age = #{age}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByAge" parameterType="map" resultType="cn.yj.db.jdbc2.po.User" >
+        select <include refid="paramSql"></include>
+        from user where age = #{age}
+    </select>
+
+    <select id="queryByName" parameterType="map" resultType="cn.yj.db.jdbc2.po.User" >
+        select <include refid="paramSql"></include>
+        from user where name = #{name}
+    </select>
+
+    <update id="updateUserNameById">
+        update user set name = #{userName} where id = #{userId}
+    </update>
+
+</mapper>

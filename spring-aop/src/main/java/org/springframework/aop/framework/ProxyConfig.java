@@ -28,20 +28,25 @@ import org.springframework.util.Assert;
  * @author Juergen Hoeller
  * @see AdvisedSupport
  */
+//代理对象的配置属性
 public class ProxyConfig implements Serializable {
 
 	/** use serialVersionUID from Spring 1.2 for interoperability */
 	private static final long serialVersionUID = -8409359707199703185L;
 
-
+	//true：表示使用Cglib代理。false：表示使用JDK代理
 	private boolean proxyTargetClass = false;
 
+	//true：那么在生成代理对象之后，如果对代理配置进行了修改，已经创建的代理对象也不会获取修改之后的代理配置。
+	//如果exposeProxy设置为true，那么optimize设置weitrue也会被忽略。
 	private boolean optimize = false;
 
 	boolean opaque = false;
 
+	//标记代理对象是否可以被AopContext以ThreadLocal的形式暴露出去。
 	boolean exposeProxy = false;
 
+	//false：允许对代理对象进行修改（在Advisor链表中新增一个Advisor）；true：不允许对代理对象进行修改。
 	private boolean frozen = false;
 
 

@@ -21,4 +21,26 @@
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
 
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource"  ref="dataSource" />
+	</bean>
+
+	<tx:advice id="tx_user_advice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"  />
+			<tx:method name="create*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="batch*" propagation="REQUIRED" />
+			<tx:method name="*" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="user4PointCut" expression="execution(* cn.yj.db.jdbc2.service.UserDao.*(..))"/>
+		<aop:advisor advice-ref="tx_user_advice" pointcut-ref="user4PointCut" />
+	</aop:config>
+
+
+
 </beans>

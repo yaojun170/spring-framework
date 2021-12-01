@@ -82,7 +82,7 @@ public class DefaultAdvisorAdapterRegistry implements AdvisorAdapterRegistry, Se
 		if (advice instanceof MethodInterceptor) {
 			interceptors.add((MethodInterceptor) advice);
 		}
-		for (AdvisorAdapter adapter : this.adapters) {
+		for (AdvisorAdapter adapter : this.adapters) {//将Advice转成MethodInteceptor
 			if (adapter.supportsAdvice(advice)) {
 				interceptors.add(adapter.getInterceptor(advisor));
 			}

@@ -1,15 +1,13 @@
-package cn.yj.mysql.jdbc2;
+package cn.yj.db.jdbc2;
 
-import cn.yj.mysql.jdbc1.TestJdbc;
-import cn.yj.mysql.jdbc2.po.User;
-import cn.yj.mysql.jdbc2.po.UserRowMapper;
-import com.mysql.jdbc.Driver;
+import cn.yj.db.jdbc1.TestJdbc;
+import cn.yj.db.jdbc2.po.User;
+import cn.yj.db.jdbc2.po.UserRowMapper;
 import org.junit.Test;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.jdbc.datasource.SimpleDriverDataSource;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
@@ -140,6 +138,68 @@ public class TestJdbcTemplate {
 			return userId;
 		});
 		System.out.println("返回："+result);
+	}
+
+
+	@Test
+	public void testMultiTransaction(){
+		DriverManagerDataSource dataSource = new DriverManagerDataSource();
+		dataSource.setUrl(TestJdbc.jdbcUrl);
+		dataSource.setUsername(TestJdbc.userName);
+		dataSource.setPassword(TestJdbc.pwd);
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		DataSourceTransactionManager txManager = new DataSourceTransactionManager(dataSource);
+
+		DefaultTransactionDefinition txDefinition = new DefaultTransactionDefinition();
+		txDefinition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
+		txDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+
+		//获取一个事务
+		TransactionStatus txStatus = txManager.getTransaction(txDefinition);
+
+		System.out.println("-methodA start--");
+		try {
+			String sql = "insert into user(name, age, sex) values (?,?,?)";
+			jdbcTemplate.update(sql, "特朗普", 75, "male");
+
+			String sql2_maxId = "select max(id) from user";
+			Integer userId = jdbcTemplate.queryForObject(sql2_maxId, int.class);
+			System.out.println("maxId="+userId);
+
+			try {
+				methodB(txDefinition,txManager,jdbcTemplate,userId);
+			} catch (Exception e) {
+				System.err.println("catch methodB exception."+e.getMessage());
+			}
+
+			txManager.commit(txStatus);
+			System.out.println("-成功结束--");
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			txManager.rollback(txStatus);
+			System.err.println("-失败回滚--");
+		}
+	}
+
+	public void methodB(DefaultTransactionDefinition txDefinition,DataSourceTransactionManager txManager,JdbcTemplate jdbcTemplate, int userId){
+		TransactionStatus txStatus = txManager.getTransaction(txDefinition);
+		System.out.println("==methodB transaction ready====");
+		//获取事务
+		try {
+			String article = "新冠病毒不可怕";
+			String sql3 = "insert into user_article(user_id,title,post_time) values(?,?, now())";
+			jdbcTemplate.update(sql3, userId, article);
+			if(article!=null){
+				throw new RuntimeException();
+			}
+			txManager.commit(txStatus);
+			System.out.println("==methodB commit====");
+		} catch (Exception e) {
+			System.out.println("==methodB rollback====");
+			txManager.rollback(txStatus);
+			throw e;
+		}
 	}
 
 }

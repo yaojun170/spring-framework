@@ -55,6 +55,11 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 	@Nullable
 	private AspectJAdvisorFactory aspectJAdvisorFactory;
 
+	/**
+	 * 作用：基于 @Aspect 时,创建 Spring AOP 的 Advice
+	 * 里面会对标注这些注解 Around.class, Before.class, After.class, AfterReturning.class, AfterThrowing.class 的方法进行排序
+	 * 然后把他们都变成 Advisor(getAdvisors()方法)
+	 */
 	@Nullable
 	private BeanFactoryAspectJAdvisorsBuilder aspectJAdvisorsBuilder;
 
@@ -86,6 +91,10 @@ public class AnnotationAwareAspectJAutoProxyCreator extends AspectJAwareAdvisorA
 	}
 
 
+	/**
+	 * 拿到所有的候选的 advisor。请注意：这里先调用了父类的 super.findCandidateAdvisors() 去容器里找出来一些
+	 * 然后自己又通过 aspectJAdvisorsBuilder.buildAspectJAdvisors() 解析 @Aspect 的方法得到一些 Advisor
+	 */
 	@Override
 	protected List<Advisor> findCandidateAdvisors() {
 		// Add all the Spring advisors found according to superclass rules.

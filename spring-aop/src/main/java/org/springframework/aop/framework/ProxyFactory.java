@@ -32,6 +32,7 @@ import org.springframework.util.ClassUtils;
  * @author Rob Harrop
  * @since 14.03.2003
  */
+//这个类通过构造函数中的 proxyInterface/interceptor/targetSource 来创建代理对象(这个类是编程式 AOP 中最常用的对象)
 @SuppressWarnings("serial")
 public class ProxyFactory extends ProxyCreatorSupport {
 

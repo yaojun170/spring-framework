@@ -245,6 +245,7 @@ public abstract class AopUtils {
 
 		for (Class<?> clazz : classes) {
 			Method[] methods = ReflectionUtils.getAllDeclaredMethods(clazz);
+			//所有的方法进行匹配（包含私有方法），若有一个匹配，那么返回true。
 			for (Method method : methods) {
 				if (introductionAwareMethodMatcher != null ?
 						introductionAwareMethodMatcher.matches(method, targetClass, hasIntroductions) :

@@ -459,7 +459,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				// Usually uses JDBC 3.0 savepoints. Never activates Spring synchronization.
 				DefaultTransactionStatus status =
 						prepareTransactionStatus(definition, transaction, false, false, debugEnabled, null);
-				status.createAndHoldSavepoint();
+				status.createAndHoldSavepoint();//savepoint [name]
 				return status;
 			}
 			else {
@@ -621,6 +621,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 * @see #doResume
 	 * @see #suspend
 	 */
+	//恢复被挂起的事务，重新绑定连接到线程，以及恢复TransactionSynchronization事务同步器
 	protected final void resume(@Nullable Object transaction, @Nullable SuspendedResourcesHolder resourcesHolder)
 			throws TransactionException {
 
@@ -797,6 +798,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 		}
 		finally {
+			//如果require_new，则恢复之前暂停的事务
 			cleanupAfterCompletion(status);
 		}
 	}
@@ -1013,7 +1015,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 		if (status.isNewTransaction()) {
 			doCleanupAfterCompletion(status.getTransaction());
 		}
-		if (status.getSuspendedResources() != null) {
+		if (status.getSuspendedResources() != null) {//恢复被挂起的事务
 			if (status.isDebug()) {
 				logger.debug("Resuming suspended transaction after completion of inner transaction");
 			}

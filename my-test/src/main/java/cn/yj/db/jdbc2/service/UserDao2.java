@@ -1,7 +1,6 @@
-package cn.yj.mysql.jdbc2.service;
+package cn.yj.db.jdbc2.service;
 
-import cn.yj.mysql.jdbc2.po.User;
-import cn.yj.mysql.jdbc2.po.UserArticle;
+import cn.yj.db.jdbc2.po.User;
 
 /**
  * @Description

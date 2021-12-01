@@ -34,6 +34,7 @@ import org.springframework.util.StopWatch;
  * @see JamonPerformanceMonitorInterceptor
  */
 @SuppressWarnings("serial")
+//记录每个方法运行的时长
 public class PerformanceMonitorInterceptor extends AbstractMonitoringInterceptor {
 
 	/**

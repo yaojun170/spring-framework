@@ -54,6 +54,7 @@ import org.springframework.util.Assert;
  * @see MethodBeforeAdviceInterceptor
  * @see AfterReturningAdviceInterceptor
  */
+//这个类其实就是将 ThrowsAdvice 包裹成 MethodInterceptor 的适配类, 而做对应适配工作的就是 ThrowsAdviceAdapter
 public class ThrowsAdviceInterceptor implements MethodInterceptor, AfterAdvice {
 
 	private static final String AFTER_THROWING = "afterThrowing";

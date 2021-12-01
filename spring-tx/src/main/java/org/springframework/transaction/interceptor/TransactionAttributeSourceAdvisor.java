@@ -37,6 +37,7 @@ import org.springframework.util.Assert;
  * @see #setTransactionInterceptor
  * @see TransactionProxyFactoryBean
  */
+//一个基于 MethodInterceptor(其实是 TransactionInterceptor)与 TransactionAttributeSourcePointcut 的Advisor, 而这个类最常与 TransactionProxyFactoryBean使用
 @SuppressWarnings("serial")
 public class TransactionAttributeSourceAdvisor extends AbstractPointcutAdvisor {
 

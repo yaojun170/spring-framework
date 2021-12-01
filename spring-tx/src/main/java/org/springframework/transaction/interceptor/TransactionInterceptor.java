@@ -49,6 +49,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  * @see org.springframework.aop.framework.ProxyFactory
  */
 @SuppressWarnings("serial")
+//这个类就是大名鼎鼎的注解式事务的工具类, 这个类通过获取注解在方法上的 @Transactional 注解的信息来决定是否开启事务的 MethodInterceptor
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor, Serializable {
 
 	/**

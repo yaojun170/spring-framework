@@ -69,6 +69,7 @@ import org.springframework.util.StringUtils;
  * @see SimpleTraceInterceptor
  */
 @SuppressWarnings("serial")
+//对方法调用前后拦截一下
 public class CustomizableTraceInterceptor extends AbstractTraceInterceptor {
 
 	/**

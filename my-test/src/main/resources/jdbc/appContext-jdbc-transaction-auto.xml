@@ -17,8 +17,15 @@
 		<property name="dataSource" ref="dataSource"></property>
 	</bean>
 
-	<bean id="userService" class="cn.yj.db.jdbc2.service.impl.UserDaoImpl">
+	<bean id="userDao3" class="cn.yj.db.jdbc2.service.impl.UserDao3Impl">
 		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
 	</bean>
+
+	<bean id="transactionManager"  class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource"  ref="dataSource" />
+	</bean>
+
+	<!-- 开启注解事务 源码：TxNamespaceHandler -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

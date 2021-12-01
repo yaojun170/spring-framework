@@ -50,6 +50,8 @@ public class AspectJAwareAdvisorAutoProxyCreator extends AbstractAdvisorAutoProx
 
 
 	/**
+	 * 核心逻辑：重写了排序，控制着最终的执行顺序
+	 * 这个排序和`org.aspectj.util`提供的 PartialOrder 和 PartialComparable 有关
 	 * Sort the rest by AspectJ precedence. If two pieces of advice have
 	 * come from the same aspect they will have the same order.
 	 * Advice from the same aspect is then further ordered according to the

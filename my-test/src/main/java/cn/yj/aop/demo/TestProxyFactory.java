@@ -1,6 +1,8 @@
 package cn.yj.aop.demo;
 
 import cn.yj.aop.service.DogTool;
+import cn.yj.aop.service.UserService;
+import cn.yj.aop.service.UserServiceImpl;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.junit.Test;
@@ -9,6 +11,7 @@ import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
+import org.springframework.aop.support.NameMatchMethodPointcut;
 
 import java.lang.reflect.Method;
 
@@ -19,10 +22,36 @@ import java.lang.reflect.Method;
  */
 public class TestProxyFactory {
 	@Test
+	public void testInterfaceProxy(){
+		ProxyFactory pf = new ProxyFactory();
+		pf.setTarget(new UserServiceImpl());
+		pf.addInterface(UserService.class);
+		DefaultPointcutAdvisor advisor = new DefaultPointcutAdvisor();
+
+		NameMatchMethodPointcut pointcut = new NameMatchMethodPointcut();
+		pointcut.addMethodName("queryName");
+		pointcut.addMethodName("insertUser");
+		advisor.setPointcut(pointcut);
+		advisor.setAdvice(new MethodBeforeAdvice() {
+							  @Override
+							  public void before(Method method, Object[] args, Object target) throws Throwable {
+								  System.out.println("before Advice..."+method.getName());
+							  }
+						  }
+		);
+		pf.addAdvisor(advisor);
+
+		UserService us = (UserService)pf.getProxy();
+		String s = us.queryName(2009);
+		System.out.println(s);
+	}
+
+
+	@Test
 	public void testProxyFactory(){
 		ProxyFactory pf = new ProxyFactory();
 		pf.setTarget(new DogTool());
-		//pf.addInterface();//不设置接口属性的话使用CGLIB代理
+//		pf.addInterface();//不设置接口属性的话使用CGLIB代理
 
 		//织入切面
 		pf.addAdvice(new MethodInterceptor() {
@@ -35,6 +64,7 @@ public class TestProxyFactory {
 				return ret;
 			}
 		});
+
 
 		DogTool proxy = (DogTool)pf.getProxy();
 		System.out.println(proxy.eat("骨头"));

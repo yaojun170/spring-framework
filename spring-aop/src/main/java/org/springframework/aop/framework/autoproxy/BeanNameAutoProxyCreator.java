@@ -114,6 +114,7 @@ public class BeanNameAutoProxyCreator extends AbstractAutoProxyCreator {
 	 * @see org.springframework.util.PatternMatchUtils#simpleMatch(String, String)
 	 */
 	protected boolean isMatch(String beanName, String mappedName) {
+		// simpleMatch 并不是完整的正则。但是支持 * 这种通配符，其余的不支持
 		return PatternMatchUtils.simpleMatch(mappedName, beanName);
 	}
 

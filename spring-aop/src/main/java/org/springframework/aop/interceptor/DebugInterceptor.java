@@ -33,6 +33,7 @@ import org.aopalliance.intercept.MethodInvocation;
  * @see CustomizableTraceInterceptor
  */
 @SuppressWarnings("serial")
+//有个计数器，记录被拦截的次数，且可以这样获取出来advice.getCount()
 public class DebugInterceptor extends SimpleTraceInterceptor {
 
 	private volatile long count;

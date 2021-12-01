@@ -11,16 +11,7 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
-	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" >
-		<property name="location" value="config.properties" />
-	</bean>
-
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" ></property>
-		<property name="url" value="${spring.datasource.url}"></property>
-		<property name="username" value="${spring.datasource.username}"></property>
-		<property name="password" value="${spring.datasource.password}"></property>
-	</bean>
+	<import resource="appContext-jdbc-datasource.xml" />
 
 	<!-- Initialization for TransactionManager -->
 	<bean id="transactionManager"
@@ -33,7 +24,7 @@
 	</bean>
 
 	<!-- Definition for studentJDBCTemplate bean -->
-	<bean class="cn.yj.mysql.jdbc2.service.impl.UserDao2Impl">
+	<bean class="cn.yj.db.jdbc2.service.impl.UserDao2Impl">
 		<property name="jdbcTemplate"  ref="jdbcTemplate" />
 		<property name="transactionManager"  ref="transactionManager" />
 	</bean>

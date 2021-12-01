@@ -37,6 +37,7 @@ import org.springframework.lang.Nullable;
  */
 @SuppressWarnings("serial")
 //DefaultPointcutAdvisor是无论什么方法都匹配
+//最常用的 Advisor, 在使用编程式aop时, 很多时候会将 Advice / MethodInterceptor 转换成 DefaultPointcutAdvisor
 public class DefaultPointcutAdvisor extends AbstractGenericPointcutAdvisor implements Serializable {
 
 	private Pointcut pointcut = Pointcut.TRUE;

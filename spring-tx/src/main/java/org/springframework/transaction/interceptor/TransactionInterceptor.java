@@ -21,6 +21,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Properties;
+import java.util.function.Supplier;
 
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
@@ -50,6 +51,7 @@ import org.springframework.transaction.PlatformTransactionManager;
  */
 @SuppressWarnings("serial")
 //这个类就是大名鼎鼎的注解式事务的工具类, 这个类通过获取注解在方法上的 @Transactional 注解的信息来决定是否开启事务的 MethodInterceptor
+//封装了事务切面逻辑
 public class TransactionInterceptor extends TransactionAspectSupport implements MethodInterceptor, Serializable {
 
 	/**

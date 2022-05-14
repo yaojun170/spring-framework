@@ -5,7 +5,7 @@
         id, name , age, sex
     </sql>
 
-    <insert id="addUser" parameterType="cn.yj.db.jdbc2.po.User">
+    <insert id="addUser" parameterType="cn.yj.db.jdbc2.po.User" useGeneratedKeys="true" keyProperty="id">
         insert into user(name,age,sex) values(#{name},#{age},#{sex})
     </insert>
 

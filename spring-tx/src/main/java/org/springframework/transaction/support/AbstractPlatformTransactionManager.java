@@ -1026,7 +1026,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 
 
 	//---------------------------------------------------------------------
-	// Template methods to be implemented in subclasses
+	// Template methods MethodCallBackto be implemented in subclasses
 	//---------------------------------------------------------------------
 
 	/**

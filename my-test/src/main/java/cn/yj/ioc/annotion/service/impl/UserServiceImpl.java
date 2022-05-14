@@ -1,9 +1,12 @@
 package cn.yj.ioc.annotion.service.impl;
 
 
+import cn.yj.ioc.annotion.service.FooService;
 import cn.yj.ioc.annotion.service.UserService;
+import cn.yj.ioc.autowire.Employee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.yj.db.mybatis.mapper.UserArticleMapper">
+
+	<sql id="resultSql" >
+		id,user_id userId, title,post_time postTime,show_count showCount, like_count likeCount, forward_count forwardCount
+	</sql>
+
+	<select id="queryArticleByUserId" resultType="cn.yj.db.jdbc2.po.UserArticle">
+		select <include refid="resultSql"></include>
+		from user_article where user_id = #{userId}
+	</select>
+
+	<insert id="addArticle" parameterType="cn.yj.db.jdbc2.po.UserArticle">
+		insert into user_article(user_id,title,post_time,show_count,like_count,forward_count)
+		values(#{userId}, #{title},#{postTime},#{showCount},#{likeCount},#{forwardCount})
+	</insert>
+</mapper>

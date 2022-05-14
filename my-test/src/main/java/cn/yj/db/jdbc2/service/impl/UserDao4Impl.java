@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronization;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 
 /**
@@ -22,6 +24,27 @@ public class UserDao4Impl implements UserDao4 {
 	@Override
 	public void insertUserAndArticle(User user, String article) {
 		System.out.println("--addUserAndArticle start---"+user+",article="+article);
+		TransactionSynchronizationManager.registerSynchronization(new TransactionSynchronization() {
+			@Override
+			public void beforeCommit(boolean readOnly) {
+				System.out.println("--beforeCommit----");
+			}
+
+			@Override
+			public void beforeCompletion() {
+				System.out.println("---beforeCompletion----");
+			}
+
+			@Override
+			public void afterCommit() {
+				System.out.println("---afterCommit()---");
+			}
+
+			@Override
+			public void afterCompletion(int status) {
+				System.out.println("---afterCompletion----"+status);
+			}
+		});
 
 		String sql = "insert into user(name, age, sex) values (?,?,?)";
 		jdbcTemplate.update(sql, user.getName(), user.getAge(), user.getSex());

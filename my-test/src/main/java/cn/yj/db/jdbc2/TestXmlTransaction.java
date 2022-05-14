@@ -38,9 +38,9 @@ public class TestXmlTransaction {
 		System.out.println("----====---");
 		User newUser = new User();
 		newUser.setAge(35);
-		newUser.setName("李小龙");
+		newUser.setName("刘德华");
 		newUser.setSex("male");
-		String article = "李小龙去世";
+		String article = "刘德华香港演唱会";
 		ud3.insertUserAndArticle(newUser, article);
 		try {
 			System.out.println("--end--");

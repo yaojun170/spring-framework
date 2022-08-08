@@ -42,6 +42,7 @@ import org.springframework.beans.BeansException;
  * @see BeanPostProcessor
  * @see PropertyResourceConfigurer
  */
+//在当前BeanFactory初始化后，bean实例化之前对BeanFactory做一些处理
 //允许自定义修改beanDefinition
 @FunctionalInterface
 public interface BeanFactoryPostProcessor {

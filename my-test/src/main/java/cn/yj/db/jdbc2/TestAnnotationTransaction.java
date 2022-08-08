@@ -4,8 +4,6 @@ import cn.yj.db.jdbc2.po.User;
 import cn.yj.db.jdbc2.service.UserDao4;
 import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.transaction.support.TransactionSynchronization;
-import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 
 /**
@@ -13,7 +11,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * @Author yaojun
  * @Date 2021-11-29
  */
-public class TestEnableTransaction {
+public class TestAnnotationTransaction {
 	@Test
 	public void testEnableTransaction(){
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyTransactionConfiguration.class);

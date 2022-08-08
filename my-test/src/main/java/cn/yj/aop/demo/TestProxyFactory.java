@@ -7,9 +7,12 @@ import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.junit.Test;
 import org.springframework.aop.AfterReturningAdvice;
+import org.springframework.aop.IntroductionAdvisor;
+import org.springframework.aop.IntroductionInterceptor;
 import org.springframework.aop.MethodBeforeAdvice;
 import org.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor;
 import org.springframework.aop.framework.ProxyFactory;
+import org.springframework.aop.support.DefaultIntroductionAdvisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.NameMatchMethodPointcut;
 
@@ -137,6 +140,23 @@ public class TestProxyFactory {
 
 		DogTool proxy = (DogTool)pf.getProxy();
 		System.out.println(proxy.eat("骨头"));
+	}
+
+	@Test
+	public void testIntroduction(){
+		ProxyFactory pf = new ProxyFactory();
+		new DefaultIntroductionAdvisor(new IntroductionInterceptor() {
+			@Override
+			public Object invoke(MethodInvocation invocation) throws Throwable {
+				System.out.println("我是引介增强的方法体~~~invoke");
+				return invocation.proceed();
+			}
+
+			@Override
+			public boolean implementsInterface(Class<?> intf) {
+				return true;
+			}
+		}, UserService.class);
 	}
 
 }

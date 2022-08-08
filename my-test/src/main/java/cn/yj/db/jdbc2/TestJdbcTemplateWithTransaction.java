@@ -53,6 +53,7 @@ public class TestJdbcTemplateWithTransaction {
 				throw new RuntimeException("test excep");
 			}
 
+
 			String sql3 = "insert into user_article(user_id,title,post_time) values(?,?, now())";
 			jdbcTemplate.update(sql3, userId, article);
 			txManager.commit(txStatus);

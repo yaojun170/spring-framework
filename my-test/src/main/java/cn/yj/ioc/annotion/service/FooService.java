@@ -1,7 +1,5 @@
 package cn.yj.ioc.annotion.service;
 
-import org.springframework.stereotype.Component;
-
 /**
  * @Description
  * @Author yaojun

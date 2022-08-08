@@ -39,7 +39,7 @@ public class TestJdbcTemplate {
 		List<User> userList = jdbcTemplate.query(sql, new UserRowMapper());
 		System.out.println("userList:"+userList);
 
-		String s = jdbcTemplate.queryForObject("select name from user where id=?", String.class, 3);
+		String s = jdbcTemplate.queryForObject("select name from user where id=?", String.class, 2);
 		System.out.println("result:"+s);
 	}
 

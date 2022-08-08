@@ -18,6 +18,7 @@ import java.util.concurrent.Future;
 @Service
 public class MyAsyncServiceImpl implements MyAsyncService {
 	Logger logger = LoggerFactory.getLogger(MyAsyncServiceImpl.class);
+
 	@Async
 	@Override
 	public void sendEmail(String toUser, String msg) {
@@ -35,7 +36,7 @@ public class MyAsyncServiceImpl implements MyAsyncService {
 	public String downloadMovie(String movieUrl) {
 		logger.info("--downloadMovie--start=====");
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -48,7 +49,7 @@ public class MyAsyncServiceImpl implements MyAsyncService {
 	public Future<String> downloadPic(String picUrl) {
 		logger.info("--downloadMovie--start=====");
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(3000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

@@ -224,7 +224,7 @@ class ConfigurationClassBeanDefinitionReader {
 		else {
 			// instance @Bean method
 			beanDef.setFactoryBeanName(configClass.getBeanName());
-			beanDef.setUniqueFactoryMethodName(methodName);
+			beanDef.setUniqueFactoryMethodName(methodName);//用来实例化bean的factory-method
 		}
 		beanDef.setAutowireMode(AbstractBeanDefinition.AUTOWIRE_CONSTRUCTOR);
 		beanDef.setAttribute(RequiredAnnotationBeanPostProcessor.SKIP_REQUIRED_CHECK_ATTRIBUTE, Boolean.TRUE);

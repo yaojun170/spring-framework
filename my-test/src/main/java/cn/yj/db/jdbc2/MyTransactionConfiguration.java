@@ -1,5 +1,6 @@
 package cn.yj.db.jdbc2;
 
+import cn.yj.db.jdbc1.TestJdbc;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -25,9 +26,9 @@ public class MyTransactionConfiguration {
 	public DataSource dataSource(){
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false");
+		ds.setUrl(TestJdbc.jdbcUrl);
 		ds.setUsername("root");
-		ds.setPassword("123456");
+		ds.setPassword(TestJdbc.pwd);
 		return ds;
 	}
 

@@ -481,7 +481,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 
 		try {
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
-			// 给BeanPostProcessors一个机会返回一个代理替代真正的实例
+			// 给InstantiationAwareBeanPostProcessor一个机会返回一个代理替代真正的实例
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {
 				return bean;
@@ -567,7 +567,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 						"' to allow for resolving potential circular references");
 			}
 			//提前将未赋值的bean的工厂对象曝光，用于解决循环依赖
-			//在有代理的情况下也会生成代理
+			//在有代理的情况下会生成代理
 			addSingletonFactory(beanName, () -> getEarlyBeanReference(beanName, mbd, bean));
 		}
 
@@ -1039,7 +1039,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 				Class<?> targetType = determineTargetType(beanName, mbd);
 				if (targetType != null) {
 					bean = applyBeanPostProcessorsBeforeInstantiation(targetType, beanName);
-					if (bean != null) {
+					if (bean != null) {//不为空，存在实例对象，完成最后初始化后的逻辑
 						bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
 					}
 				}
@@ -1303,6 +1303,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Give any InstantiationAwareBeanPostProcessors the opportunity to modify the
 		// state of the bean before properties are set. This can be used, for example,
 		// to support styles of field injection.
+		// 触发InstantiationAwareBeanPostProcessor.postProcessAfterInstantiation
 		if (!mbd.isSynthetic() && hasInstantiationAwareBeanPostProcessors()) {
 			for (BeanPostProcessor bp : getBeanPostProcessors()) {
 				if (bp instanceof InstantiationAwareBeanPostProcessor) {
@@ -1712,6 +1713,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 		if (mbd == null || !mbd.isSynthetic()) {
 			//BeanPostProcessor.postProcessAfterInitialization()
+			//主要是用于生成该bean对象的代理
 			wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
 		}
 

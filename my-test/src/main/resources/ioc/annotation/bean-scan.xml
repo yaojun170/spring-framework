@@ -14,4 +14,5 @@
 	<context:component-scan base-package="cn.yj.ioc.annotion.service"  >
 	</context:component-scan>
 
+
 </beans>

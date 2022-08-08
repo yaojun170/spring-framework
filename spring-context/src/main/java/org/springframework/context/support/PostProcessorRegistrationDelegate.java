@@ -89,7 +89,7 @@ final class PostProcessorRegistrationDelegate {
 			}
 			sortPostProcessors(currentRegistryProcessors, beanFactory);
 			registryProcessors.addAll(currentRegistryProcessors);
-			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);
+			invokeBeanDefinitionRegistryPostProcessors(currentRegistryProcessors, registry);//**
 			currentRegistryProcessors.clear();
 
 			// Next, invoke the BeanDefinitionRegistryPostProcessors that implement Ordered.
@@ -248,7 +248,7 @@ final class PostProcessorRegistrationDelegate {
 				internalPostProcessors.add(pp);
 			}
 		}
-		registerBeanPostProcessors(beanFactory, nonOrderedPostProcessors);
+		registerBeanPostProcessors(beanFactory, nonOrderedPostProcessors);//**注册BeanFactoryPostProcessor bean
 
 		// Finally, re-register all internal BeanPostProcessors.
 		sortPostProcessors(internalPostProcessors, beanFactory);

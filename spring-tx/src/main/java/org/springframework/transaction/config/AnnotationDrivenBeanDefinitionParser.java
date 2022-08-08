@@ -68,7 +68,7 @@ class AnnotationDrivenBeanDefinitionParser implements BeanDefinitionParser {
 		}
 		else {
 			// mode="proxy"
-			// 一般使用的是当前这种方式，这种方式将会在Spring中注册三个bean
+			// *** 一般使用的是当前这种方式，这种方式将会在Spring中注册三个bean
 			// 分别是:AnnotationTransactionAttributeSource，TransactionInterceptor和BeanFactoryTransactionAttributeSourceAdvisor，并通过Aop的方式实现事务
 			AopAutoProxyConfigurer.configureAutoProxyCreator(element, parserContext);
 		}

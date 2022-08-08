@@ -12,10 +12,9 @@
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
 
 	<bean id="animal" class="cn.yj.demo.Animal">
-		<property name="name" value="dog" />
+		<property name="name" value="pig" />
 		<property name="legs" value="4" />
-		<property name="address" value="japan" >
-		</property>
+		<property name="address" value="zoo" ></property>
 	</bean>
 
 	<bean id="demoService"  class="cn.yj.demo.DemoServiceImpl" >

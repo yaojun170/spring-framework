@@ -19,10 +19,12 @@ import java.util.concurrent.Future;
  */
 public class TestAsync {
 	@Test
-	public void testAsync() throws InterruptedException {
+	public void testAsync() throws Exception {
 		AnnotationConfigApplicationContext ac = new AnnotationConfigApplicationContext(MyConfiguration.class);
 		MyAsyncService mas = ac.getBean(MyAsyncService.class);
-		mas.sendEmail("xiaowang@sogou-inc.com","welcome sogou family");
+		mas.sendEmail("jaylee@sogou-inc.com","welcome sogou family");
+		mas.downloadMovie("spiderman3.mov");
+		System.in.read();
 	}
 
 	@Test

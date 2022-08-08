@@ -339,7 +339,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 	 */
 	@Override
 	public final TransactionStatus getTransaction(@Nullable TransactionDefinition definition) throws TransactionException {
-		// 获取事务管理对象DataSourceTransactionObject，从实现可以知道，这里是尝试获取已有的事务管理对象，这里已有的就是指“传播”来的事务。
+		// 获取事务管理对象DataSourceTransactionObject，这里是尝试获取已有的事务管理对象，已有的就是指“传播”来的事务。
 		Object transaction = doGetTransaction();
 
 		// Cache debug flag to avoid repeated checks.
@@ -378,7 +378,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 						definition, transaction, true, newSynchronization, debugEnabled, suspendedResources);
 				//get一个新的数据库连接
 				//将新的数据库连接设置到事务对象上
-				//关闭自动提交
+				//Connection.setAutoCommit(false)
 				//将数据库连接绑定到当前线程上，具体是：ConnectionHolder
 				doBegin(transaction, definition);
 				//初始化List<TransactionSynchronization>

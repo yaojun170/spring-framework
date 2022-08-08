@@ -344,7 +344,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 		if (Boolean.FALSE.equals(this.advisedBeans.get(cacheKey))) {
 			return bean;
 		}
-		//判断是不是基础的Bean(Advice,PointCut,Advisor)是就直接跳过
+		//如果是基础的Bean(Advice,PointCut,Advisor)就直接跳过
 		if (isInfrastructureClass(bean.getClass()) || shouldSkip(bean.getClass(), beanName)) {
 			this.advisedBeans.put(cacheKey, Boolean.FALSE);
 			return bean;
@@ -352,6 +352,8 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 
 		// Create proxy if we have advice.
 		// 返回匹配当前bean的所有的advisor,advice,interceptor
+		// 先找到所有注册的Advisor bean，然后判断是否match当前实例
+		// 注意：@Async为bean生成代理不是通过此BeanPostProcessor
 		Object[] specificInterceptors = getAdvicesAndAdvisorsForBean(bean.getClass(), beanName, null);
 		if (specificInterceptors != DO_NOT_PROXY) {
 			this.advisedBeans.put(cacheKey, Boolean.TRUE);

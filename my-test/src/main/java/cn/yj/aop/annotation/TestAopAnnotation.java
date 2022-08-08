@@ -3,6 +3,7 @@ package cn.yj.aop.annotation;
 import cn.yj.aop.service.DogTool;
 import cn.yj.aop.service.UserService;
 import org.junit.Test;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -12,7 +13,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class TestAopAnnotation {
 	@Test
-	public void testAnnotation(){
+	public void testAopAnnotation(){
 		System.out.println("---sss--");
 		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("aop/bean-aop-annotation.xml");
 		DogTool dt = context.getBean("dog", DogTool.class);
@@ -21,6 +22,15 @@ public class TestAopAnnotation {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+	@Test
+	public void testAnnotation(){
+		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(AopConfiguration.class);
+		DogTool dogTool = context.getBean(DogTool.class);
+		String f = dogTool.eat("shit");
+		System.out.println("return:"+f);
+
 	}
 
 

@@ -40,6 +40,9 @@ import org.springframework.lang.Nullable;
  * @see ConfigurableBeanFactory#addBeanPostProcessor
  * @see BeanFactoryPostProcessor
  */
+//用于对新创建的bean实例做自定义修改
+	//在初始化(init-method,afterPropertiesSet)之前调用,
+	//比如bean增强，返回bean代理
 public interface BeanPostProcessor {
 
 	/**

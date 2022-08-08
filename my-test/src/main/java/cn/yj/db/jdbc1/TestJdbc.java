@@ -10,9 +10,9 @@ import java.sql.*;
  * @Date 2020-12-17
  */
 public class TestJdbc {
-    public static String jdbcUrl = "jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&useSSL=false";
+    public static String jdbcUrl = "jdbc:mysql://bj-cynosdbmysql-grp-ozs3xkhq.sql.tencentcdb.com:22438/demo?characterEncoding=utf8&useSSL=false";
     public static String userName = "root";
-    public static String pwd = "123456";
+    public static String pwd = "Yao12345";
     public static String DRIVER = "com.mysql.jdbc.Driver";
 
     @Test
@@ -21,10 +21,10 @@ public class TestJdbc {
             Class.forName("com.mysql.jdbc.Driver");//注册数据库驱动
             Connection con = DriverManager.getConnection(jdbcUrl, userName, pwd);//获取数据库连接
             Statement statement = con.createStatement();
-            ResultSet rs = statement.executeQuery("select * from user");
+            ResultSet rs = statement.executeQuery("select * from account");
             System.out.println("---查询结果如下：---");
             while (rs.next()){
-                System.out.println("id:"+rs.getInt("id")+", name:"+rs.getString("name")+", age:"+rs.getInt("age")+",sex:"+rs.getString("sex"));
+                System.out.println("id:"+rs.getInt("id")+", name:"+rs.getString("name")+", balance:"+rs.getInt("balance"));
             }
 
             rs.close();
@@ -42,11 +42,11 @@ public class TestJdbc {
     public void queryWithStatement2() throws Exception{
         Connection connection = DriverManager.getConnection(jdbcUrl, userName, pwd);
         Statement statement = connection.createStatement();
-        boolean execute = statement.execute("select * from user");//statement.execute
+        boolean execute = statement.execute("select * from account");//statement.execute
         System.out.println("执行结果："+execute);
         ResultSet rs = statement.getResultSet();
         while (rs.next()){
-            System.out.println("id:"+rs.getInt("id")+", name:"+rs.getString("name")+", age:"+rs.getInt("age")+",sex:"+rs.getString("sex"));
+			System.out.println("id:"+rs.getInt("id")+", name:"+rs.getString("name")+", balance:"+rs.getInt("balance"));
         }
 
         rs.close();
@@ -100,10 +100,7 @@ public class TestJdbc {
     public void queryWithPreparedStatement(){
 
         try {
-//            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://10.160.35.155:3306/yaojun_db?user=work&password=test123";
-            Connection con = DriverManager.getConnection(url);
-//            Connection con = DriverManager.getConnection(jdbcUrl, userName, pwd);
+			Connection con = DriverManager.getConnection(jdbcUrl, userName, pwd);
             String preSql = "select * from t_learn_user where id<? and sex=?";
             PreparedStatement pst = con.prepareStatement(preSql);
             pst.setInt(1, 4);
@@ -168,6 +165,27 @@ public class TestJdbc {
             conn.close();
         }
     }
+
+	@Test
+	public void testTransaction3() throws Exception{
+		Connection conn = DBUtil.getConnection();
+		try {
+			conn.setAutoCommit(false);//关闭自动提交
+			String sql = "insert into user(name,age,sex) values('jack',56,'male')";
+			String sql2 = "insert into user(name,age,sex) values('pony',52,'male')";
+			PreparedStatement pst = conn.prepareStatement(sql);
+			PreparedStatement pst2 = conn.prepareStatement(sql2);
+			pst.executeUpdate();
+			pst2.executeUpdate();
+			conn.commit();//提交事务
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conn.rollback();
+		} finally {
+			conn.setAutoCommit(true);
+			conn.close();
+		}
+	}
 
 
 

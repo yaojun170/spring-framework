@@ -257,7 +257,9 @@ public class ContextLoader {
 	 * @see #CONTEXT_CLASS_PARAM
 	 * @see #CONFIG_LOCATION_PARAM
 	 */
+	//创建和初始化根IOC容器
 	public WebApplicationContext initWebApplicationContext(ServletContext servletContext) {
+		//只能存在一个根IOC容器
 		if (servletContext.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE) != null) {
 			throw new IllegalStateException(
 					"Cannot initialize context because there is already a root application context present - " +
@@ -274,6 +276,7 @@ public class ContextLoader {
 		try {
 			// Store context in local instance variable, to guarantee that
 			// it is available on ServletContext shutdown.
+			// 如果当前成员变量中不存在WebApplicationContext则创建一个ConfigurableWebApplicationContext
 			if (this.context == null) {
 				this.context = createWebApplicationContext(servletContext);
 			}
@@ -288,9 +291,14 @@ public class ContextLoader {
 						ApplicationContext parent = loadParentContext(servletContext);
 						cwac.setParent(parent);
 					}
+					//*** 配置并刷新整个根IoC容器，在这里会进行Bean的创建和初始化
 					configureAndRefreshWebApplicationContext(cwac, servletContext);
 				}
 			}
+			/*
+            将创建好的IoC容器放入到ServletContext上下文对象中，并设置key为WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE
+            因此，在SpringMVC开发中可以在jsp中通过该key在application对象中获取到根IoC容器，进而获取到相应的Ben
+            */
 			servletContext.setAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE, this.context);
 
 			ClassLoader ccl = Thread.currentThread().getContextClassLoader();

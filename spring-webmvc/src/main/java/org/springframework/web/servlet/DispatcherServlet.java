@@ -884,6 +884,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Exposes the DispatcherServlet-specific request attributes and delegates to {@link #doDispatch}
 	 * for the actual dispatching.
 	 */
+	//请求入口
 	@Override
 	protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if (logger.isDebugEnabled()) {
@@ -945,6 +946,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure
 	 */
+	//请求处理逻辑
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpServletRequest processedRequest = request;
 		HandlerExecutionChain mappedHandler = null;
@@ -983,7 +985,7 @@ public class DispatcherServlet extends FrameworkServlet {
 					}
 				}
 
-				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
+				if (!mappedHandler.applyPreHandle(processedRequest, response)) {//执行过滤器HandlerInteceptor的preHandle()方法
 					return;
 				}
 
@@ -995,7 +997,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				applyDefaultViewName(processedRequest, mv);
-				mappedHandler.applyPostHandle(processedRequest, response, mv);
+				mappedHandler.applyPostHandle(processedRequest, response, mv);//执行HandlerInterceptor的postHandle()方法
 			}
 			catch (Exception ex) {
 				dispatchException = ex;
@@ -1005,6 +1007,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				// making them available for @ExceptionHandler methods and other scenarios.
 				dispatchException = new NestedServletException("Handler dispatch failed", err);
 			}
+			//结果调用render()方法来渲染
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {
@@ -1179,7 +1182,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 */
 	@Nullable
 	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
-		if (this.handlerMappings != null) {
+		if (this.handlerMappings != null) {//RequestMappingHandlerMapping和BeanNameUrlHandlerMapping
 			for (HandlerMapping hm : this.handlerMappings) {
 				if (logger.isTraceEnabled()) {
 					logger.trace(

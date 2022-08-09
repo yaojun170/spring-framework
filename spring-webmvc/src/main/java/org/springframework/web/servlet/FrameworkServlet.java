@@ -524,6 +524,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @see #setContextConfigLocation
 	 */
 	protected WebApplicationContext initWebApplicationContext() {
+		//获取由ContextLoaderListener创建的根IoC容器,获取根IoC容器有两种方法，还可通过key直接获取
 		WebApplicationContext rootContext =
 				WebApplicationContextUtils.getWebApplicationContext(getServletContext());
 		WebApplicationContext wac = null;
@@ -554,6 +555,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		}
 		if (wac == null) {
 			// No context instance is defined for this servlet -> create a local one
+			// 如果仍旧没有查找到子IoC容器则创建一个子IoC容器
 			wac = createWebApplicationContext(rootContext);
 		}
 
@@ -562,7 +564,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			// support or the context injected at construction time had already been
 			// refreshed -> trigger initial onRefresh manually here.
 			synchronized (this.onRefreshMonitor) {
-				onRefresh(wac);
+				onRefresh(wac);//创建springmvc使用到的重要组件
 			}
 		}
 

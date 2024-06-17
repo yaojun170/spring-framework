@@ -4,6 +4,7 @@ import cn.yj.ioc.annotion.MyOtherConfiguration;
 import org.junit.Test;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.SpringVersion;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.ReflectionUtils;
@@ -31,4 +32,11 @@ public class TestAnnotationUtil {
 		System.out.println(beanAnnoAttributes);
 		System.out.println("--");
 	}
+
+	@Test
+	public void testVersion(){
+		String version = SpringVersion.getVersion();
+		System.out.println(version);
+	}
+
 }

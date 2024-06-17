@@ -493,7 +493,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
-			//真正创建bean，并赋值
+			//*****真正创建bean，并赋值
 			Object beanInstance = doCreateBean(beanName, mbdToUse, args);
 			if (logger.isDebugEnabled()) {
 				logger.debug("Finished creating instance of bean '" + beanName + "'");
@@ -574,7 +574,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		// Initialize the bean instance.
 		Object exposedObject = bean;
 		try {
-			populateBean(beanName, mbd, instanceWrapper);//设置属性值
+			populateBean(beanName, mbd, instanceWrapper);//属性赋值
 			exposedObject = initializeBean(beanName, exposedObject, mbd);//触发初始化方法：afterPropertiesSet()和init-method
 		}
 		catch (Throwable ex) {

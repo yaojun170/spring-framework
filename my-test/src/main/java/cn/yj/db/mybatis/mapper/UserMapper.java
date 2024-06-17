@@ -1,6 +1,7 @@
 package cn.yj.db.mybatis.mapper;
 
 import cn.yj.db.jdbc2.po.User;
+import com.sun.istack.internal.NotNull;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

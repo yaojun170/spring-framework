@@ -11,9 +11,9 @@
             <transactionManager type="JDBC"/>
             <dataSource type="UNPOOLED">
                 <property name="driver" value="com.mysql.jdbc.Driver"/>
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=utf8&amp;useSSL=false"/>
+                <property name="url" value="jdbc:mysql://bj-cynosdbmysql-grp-ozs3xkhq.sql.tencentcdb.com:22438/demo?characterEncoding=utf8&amp;useSSL=false"/>
                 <property name="username" value="root"/>
-                <property name="password" value="123456"/>
+                <property name="password" value="Yao12345"/>
             </dataSource>
         </environment>
     </environments>

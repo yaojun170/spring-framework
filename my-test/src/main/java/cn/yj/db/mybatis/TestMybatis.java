@@ -10,6 +10,7 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.session.SqlSessionManager;
 import org.junit.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -22,6 +23,7 @@ import java.util.List;
  * @Date 2021-11-28
  */
 public class TestMybatis {
+	//基于SqlSessionFactory
 	@Test
 	public void testMybatis() throws Exception{
 		String resource = "mybatis/mybatis-config.xml";
@@ -29,9 +31,7 @@ public class TestMybatis {
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
 		SqlSession sqlSession = sqlSessionFactory.openSession(true);
 		UserMapper um = sqlSession.getMapper(UserMapper.class);
-		UserMapper um2 = sqlSession.getMapper(UserMapper.class);
 		System.out.println(um);
-		System.out.println(um2);
 		List<User> users = um.queryUsers();
 		System.out.println(users);
 		System.out.println("----update--");
@@ -42,6 +42,20 @@ public class TestMybatis {
 		newUser.setName("李连杰");
 		newUser.setSex("male");
 		um.addUser(newUser);*/
+		UserMapper um2 = sqlSession.getMapper(UserMapper.class);
+		System.out.println(um2);
+	}
+
+	@Test
+	public void testWithSqlSessionManager() throws Exception{
+		String resource = "mybatis/mybatis-config.xml";
+		InputStream resourceAsStream = Resources.getResourceAsStream(resource);
+		SqlSessionManager sqlSessionManager = SqlSessionManager.newInstance(resourceAsStream);
+		UserMapper userMapper = sqlSessionManager.getMapper(UserMapper.class);
+		List<User> users = userMapper.queryUsers();
+		System.out.println("----->");
+		System.out.println(users);
+
 	}
 
 	@Test
@@ -51,13 +65,13 @@ public class TestMybatis {
 		System.out.println("-----");
 		List<User> users = um.queryUsers();
 		users.forEach((useri -> System.out.println(useri)));
-		System.out.println("-------");
+		/*System.out.println("-------");
 		UserArticleMapper uam = appCtx.getBean(UserArticleMapper.class);
 		UserArticle userArticle = uam.queryArticleByUserId(28);
 		System.out.println(userArticle);
 		System.out.println("========");
 		UserTestMapper utm = appCtx.getBean(UserTestMapper.class);
-		utm.queryList();
+		utm.queryList();*/
 		/*UserArticle newArticle = new UserArticle();
 		newArticle.setUserId(3);
 		newArticle.setForwardCount(5);

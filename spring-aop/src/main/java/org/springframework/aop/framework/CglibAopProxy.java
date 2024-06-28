@@ -191,7 +191,7 @@ class CglibAopProxy implements AopProxy, Serializable {
 			enhancer.setNamingPolicy(SpringNamingPolicy.INSTANCE);
 			enhancer.setStrategy(new ClassLoaderAwareUndeclaredThrowableStrategy(classLoader));
 
-			Callback[] callbacks = getCallbacks(rootClass);
+			Callback[] callbacks = getCallbacks(rootClass);//** 获取拦截器
 			Class<?>[] types = new Class<?>[callbacks.length];
 			for (int x = 0; x < types.length; x++) {
 				types[x] = callbacks[x].getClass();
@@ -284,6 +284,7 @@ class CglibAopProxy implements AopProxy, Serializable {
 		boolean isFrozen = this.advised.isFrozen();
 		boolean isStatic = this.advised.getTargetSource().isStatic();
 
+		// 当方法上有需要执行的拦截器的时候，会用这个来处理
 		// Choose an "aop" interceptor (used for AOP calls).
 		Callback aopInterceptor = new DynamicAdvisedInterceptor(this.advised);
 
@@ -307,8 +308,8 @@ class CglibAopProxy implements AopProxy, Serializable {
 				new StaticDispatcher(this.advised.getTargetSource().getTarget()) : new SerializableNoOp());
 
 		Callback[] mainCallbacks = new Callback[] {
-				aopInterceptor,  // for normal advice
-				targetInterceptor,  // invoke target without considering advice, if optimized
+				aopInterceptor,  // for normal advice 处理匹配到拦截器的方法
+				targetInterceptor,  // invoke target without considering advice, if optimized 处理未匹配到拦截器的方法
 				new SerializableNoOp(),  // no override for methods mapped to this
 				targetDispatcher, this.advisedDispatcher,
 				new EqualsInterceptor(this.advised),
@@ -686,6 +687,7 @@ class CglibAopProxy implements AopProxy, Serializable {
 				}
 				else {
 					// We need to create a method invocation...
+					// 通过CglibMethodInvocation来完成方法调用
 					retVal = new CglibMethodInvocation(proxy, target, method, args, targetClass, chain, methodProxy).proceed();
 				}
 				retVal = processReturnType(proxy, target, method, retVal);

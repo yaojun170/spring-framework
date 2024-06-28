@@ -106,6 +106,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 	 * "proxy without additional interceptors, just the common ones".
 	 * @see #getAdvicesAndAdvisorsForBean
 	 */
+	//表示需要代理此 Bean，但不需要额外的拦截器。
 	protected static final Object[] PROXY_WITHOUT_ADDITIONAL_INTERCEPTORS = new Object[0];
 
 

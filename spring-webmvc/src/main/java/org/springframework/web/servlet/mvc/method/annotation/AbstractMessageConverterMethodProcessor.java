@@ -261,7 +261,7 @@ public abstract class AbstractMessageConverterMethodProcessor extends AbstractMe
 						if (genericConverter != null) {
 							genericConverter.write(outputValue, declaredType, selectedMediaType, outputMessage);
 						}
-						else {
+						else {//** 接口返回json走这里，返回application/json通常使用MappingJackson2HttpMessageConverter
 							((HttpMessageConverter) converter).write(outputValue, selectedMediaType, outputMessage);
 						}
 						if (logger.isDebugEnabled()) {

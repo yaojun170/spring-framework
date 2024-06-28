@@ -115,7 +115,7 @@ public class AsyncExecutionInterceptor extends AsyncExecutionAspectSupport imple
 					"No executor specified and no default executor set on AsyncExecutionInterceptor either");
 		}
 
-		//将被调用的方法包装成Callable丢给线程池执行
+		//将被调用的方法包装成Callable任务
 		Callable<Object> task = () -> {
 			try {
 				Object result = invocation.proceed();

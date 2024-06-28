@@ -319,7 +319,7 @@ public abstract class AopUtils {
 				// already processed
 				continue;
 			}
-			if (canApply(candidate, clazz, hasIntroductions)) {
+			if (canApply(candidate, clazz, hasIntroductions)) {//*** 筛选关键方法
 				eligibleAdvisors.add(candidate);
 			}
 		}

@@ -33,7 +33,6 @@ public class TestJdbcTemplate {
 		dataSource.setUsername(TestJdbc.userName);
 		dataSource.setPassword(TestJdbc.pwd);
 
-
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		String sql = "select * from user";
 		List<User> userList = jdbcTemplate.query(sql, new UserRowMapper());

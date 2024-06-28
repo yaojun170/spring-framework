@@ -83,6 +83,7 @@ public class TestJdbcTemplateWithTransaction {
 		// 默认使用的是数据库底层的默认的事务的超时时间
 		tt.setTimeout(30000);
 
+
 		Integer result = tt.execute((txStatus) -> {
 			String sql = "insert into user(name, age, sex) values (?,?,?)";
 			jdbcTemplate.update(sql, "spider man", 43, "male");

@@ -17,8 +17,4 @@ public class TestAutowire {
 		System.out.println(cc);
 	}
 
-	@Test
-	public void testByType(){
-
-	}
 }

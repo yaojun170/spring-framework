@@ -323,8 +323,8 @@ public class ConfigurationClassPostProcessor implements BeanDefinitionRegistryPo
 		Set<ConfigurationClass> alreadyParsed = new HashSet<>(configCandidates.size());
 		do {
 			// **核心方法： 解析配置类上的注解(ComponentScan扫描出的类，@Import注册的类，以及@Bean方法定义的类)
-			// 注意：这一步只会将加了@Configuration注解以及通过@ComponentScan注解扫描的类才会加入到BeanDefinitionMap中
-			// 而其他注解(例如@Import、@Bean)这一步并不会将其解析为BeanDefinition，而是先解析成ConfigurationClass类
+			// 注意：这一步只会将有@Configuration注解及通过@ComponentScan注解扫描的类才会加入到BeanDefinitionMap中
+			// 而其他注解(例如@Import、@Bean)这一步还不会解析，而是先解析成ConfigurationClass类
 			// 真正放入到map中是在下面的this.reader.loadBeanDefinitions()方法中实现的
 			parser.parse(candidates);
 			// 校验 配置类不能使final的，因为需要使用CGLIB生成代理对象，见postProcessBeanFactory方

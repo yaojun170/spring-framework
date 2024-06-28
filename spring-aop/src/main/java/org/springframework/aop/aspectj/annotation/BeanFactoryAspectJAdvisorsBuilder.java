@@ -110,7 +110,7 @@ public class BeanFactoryAspectJAdvisorsBuilder {
 								MetadataAwareAspectInstanceFactory factory =
 										new BeanFactoryAspectInstanceFactory(this.beanFactory, beanName);
 								// ** 关键方法
-								// 从Advice类中解析出所有Advisor，给类中每个advice方法创建一个Advisor
+								// 从Aspect类中解析出所有Advisor，给类中每个advice方法创建一个Advisor
 								List<Advisor> classAdvisors = this.advisorFactory.getAdvisors(factory);
 								if (this.beanFactory.isSingleton(beanName)) {
 									this.advisorsCache.put(beanName, classAdvisors);

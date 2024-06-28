@@ -381,7 +381,7 @@ public abstract class AbstractPlatformTransactionManager implements PlatformTran
 				//Connection.setAutoCommit(false)
 				//将数据库连接绑定到当前线程上，具体是：ConnectionHolder
 				doBegin(transaction, definition);
-				//初始化List<TransactionSynchronization>
+				//初始化初始化事务同步器TransactionSynchronizationManager
 				prepareSynchronization(status, definition);
 				return status;
 			}

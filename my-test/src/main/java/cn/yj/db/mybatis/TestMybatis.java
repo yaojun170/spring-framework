@@ -27,8 +27,7 @@ public class TestMybatis {
 	@Test
 	public void testMybatis() throws Exception{
 		String resource = "mybatis/mybatis-config.xml";
-		InputStream resourceAsStream = Resources.getResourceAsStream(resource);
-		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(resourceAsStream);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(Resources.getResourceAsStream(resource));
 		SqlSession sqlSession = sqlSessionFactory.openSession(true);
 		UserMapper um = sqlSession.getMapper(UserMapper.class);
 		System.out.println(um);
